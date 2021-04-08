@@ -1,3 +1,3 @@
 # Notes
 
-> Useful notes
+> Useful notes.
