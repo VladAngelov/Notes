@@ -4,27 +4,35 @@
 ## Introduction
 
 > Alfresco Community Edition is an open source Enterprise Content Management (ECM) system that manages all the content within an enterprise and provides the services and controls that manage this content.
+
 > *Alfresco Community Edition е система за управление на съдържание (данни) с отворен код и осигурява сървиси и контроли, с които да управлява съдържанието.*
 
 > At the core of the Community Edition system is a repository supported by a server that persists content, metadata, associations, and full text indexes.
+
 > *В основата на системата Alfresco Community Edition е хранилище (repository), поддържано (подпомагано) от сървър, който съхранвяа съдържанието, мета данните, асоциации и индексите.*
 
 > Programming interfaces support multiple languages and protocols upon which developers can create custom applications and solutions.
+
 > *Програминя интерфейс поддържа множество езици и протоколи, чрез които разработчиците, могат да създадат свои проложения и решеняи.*
 
 > Out-of-the-box applications provide standard solutions such as document management, and web content management.
+
 > *Готовите приложения осигуряват стандартни решения като управление на документи и управление на уеб съдържание.*
 
 > As an entirely Java application, the Community Edition system runs on virtually any system that can run Java Enterprise Edition.
+
 > *Това е JAVA приложение, което моде да върви на всяка система, която може да стартира JEE.*
 
 > At the core is the Spring platform, providing the ability to modularize functionality, such as versioning, security, and rules. 
+
 > *Изградено е на Spring платформа, предоставяща възможността за модулиране на функционалността като версия, сигурност и правила.*
 
 > Alfresco uses scripting to simplify adding new functionality and developing new programming interfaces. 
+
 > *Alfresco използва скриптове, за да опрости добавянето на нова функционалност и разработването на нови програмни интерфейси.*
 
 > *This portion of the architecture is known as web scripts and can be used for both data and presentation services.*
+
 > *Тази част от архитектурата е известна като уеб скриптове и може да се използва както за данни, така и за презентационни услуги.*
 
 
