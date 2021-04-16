@@ -93,8 +93,11 @@
 ### Platform architecture
 
 > The platform architecture consists of the repository and related services. 
+
 > *Архитектурата на платформата се състои от хранилището и свързаните с него услуги.* 
+
 > The platform contains the key extension points for building your own extensions.
+
 > *Платформата съдържа ключовите точки за разширение за изграждане на собствени разширения.*
 
 > * The platform consists of:
