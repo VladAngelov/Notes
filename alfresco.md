@@ -128,3 +128,30 @@
 >       * *Docker Compose - Alfresco осигурява Docker Compose файлове, които са най-бързия начин за deployment на разработката и тестване. Потребителите, които искат да си използват техни разработки използвайки docker-compose файлове, могат да разширят скриптовете ако е нужно.*
 >       * *Helm charts - Helm charts са най-често използвани, когато се оркестрира чрез Kubernetes.* (https://docs.alfresco.com/content-services/community/install/containers/helm/)
 
+
+### UI architecture
+
+> The Web UI architecture consists of a number of web clients and the Application Development Framework (ADF) *ADF doesn't work because a lot of things are deprecated*.
+
+> *Архитектурата на потрбителския уеб интерфейс се състои от редица уеб клиенти и средата за разработка на приложения на Алфреско (ADF), но не работи, защото е много остаряло и е deprecated.*
+
+> * Our Web UI architecture consists of:
+>   * Presentation - View and Component
+>   * Services - Logic
+>   * API
+>   * DB
+
+> * *Нашата UI архитектура се състои от:*
+>   * *Презентационен слой - Изгледи и компоненти*
+>   * *Сървиси - Логика*
+>   * *API*
+>   * *DB*
+
+
+----- | --- | ----
+Presentation | --> | Alfresco APIs
+Presentation | --> | Services
+Services | --> | Alfresco APIs
+Services | --> | DB
+
+
