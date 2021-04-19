@@ -148,7 +148,7 @@
 >   * *DB*
 
 
-From | --> | To
+From |  | To
 ---- | --- | --
 Presentation | --> | Alfresco APIs
 Presentation | --> | Services
