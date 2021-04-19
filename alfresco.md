@@ -148,9 +148,31 @@
 >   * *DB*
 
 
-From |  | To
----- | --- | --
+From | --> | To
+---- | --> | --
 Presentation | --> | Alfresco APIs
 Presentation | --> | Services
 Services | --> | Alfresco APIs
 Services | --> | DB
+
+
+### Integration
+
+> * Access protocols:
+>   * HTTP - The main protocol used to access the repository via for example the ReST APIs.
+>   * WebDAV - Web-based Distributed Authoring and Versioning is a set of HTTP extensions that lets you manage files collaboratively on web servers.
+>   * FTP - File Transfer Protocol - standard network protocol for file upload, download and manipulation. Useful for bulk uploads and downloads.
+>   * Alfresco Office Service - (AOS) allow you to access Content Services directly from all your Microsoft Office applications.
+>   * CMIS - 1.0 and 1.1 standards to allow your application to manage content and metadata in an on-premise repository.
+>   * IMAP - Internet Message Access Protocol - allows access to email on a remote server.
+>   * SMTP - It is possible to email content into the repository (InboundSMTP), a folder can be dedicated as an email target.
+
+> * *Протоколи за достъп:*
+>   * *HTTP - Главният протокол, който се използва за достъп на хранилището.*
+>   * *WebDAV - Web-based Distributed Authoring and Versioning е съвкупност от HTTP разширения, които позволяват управлението на файловете на уеб сървър.*
+>   * *FTP - File Transfer Protocol - стандартен мрожови протокол за качване, сваляне и манипулиране на файлове.*
+>   * *Alfresco Office Service - (AOS) позволява достъп до сървисите доректно от всички Microsoft Office приложения.*
+>   * *CMIS - Напълно имплементирани 1.0 и 1.1 стандарти позволяват на приложенито да управялява съдържанието, метаданните в локалното хранилище.*
+>   * *IMAP - Internet Message Access Protocol - позволява достъп до мейл от външен сървър.*
+>   * *SMTP - Възможно е да се изпраща съдържание по мейл към хранилището към папка, която може да бъде мишена на мейла (email target).*
+
