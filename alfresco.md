@@ -156,7 +156,7 @@ Services | --> | Alfresco APIs
 Services | --> | DB
 
 
-### Integration
+## Integration
 
 > * Access protocols:
 >   * HTTP - The main protocol used to access the repository via for example the ReST APIs.
