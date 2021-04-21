@@ -156,7 +156,7 @@ Services | --> | Alfresco APIs
 Services | --> | DB
 
 
-## Integration
+### Integration
 
 > * Access protocols:
 >   * HTTP - The main protocol used to access the repository via for example the ReST APIs.
@@ -175,3 +175,141 @@ Services | --> | DB
 >   * *CMIS - Напълно имплементирани 1.0 и 1.1 стандарти позволяват на приложенито да управялява съдържанието, метаданните в локалното хранилище.*
 >   * *IMAP - Internet Message Access Protocol - позволява достъп до мейл от външен сървър.*
 >   * *SMTP - Възможно е да се изпраща съдържание по мейл към хранилището към папка, която може да бъде мишена на мейла (email target).*
+
+
+## Repository
+
+> * The Alfresco Repository actually provides three APIs.
+>   * Repository Foundation Services - a set of local Java Interfaces covering all capabilities which are ideal for clients who wish to embed the Repository. 
+> *The other two APIs are built on top of the Foundation Services, and thus take full advantage of the encapsulated content model logic and rules.*
+>   * Java Content Repository (JCR) API - a standard Java API for accessing Content Repositories (standardised read and write access).
+>   * Web Services - supports remote access and bindings to any client environment, not just Java.
+
+> * *The Alfresco Repository осигурява 3 API-та.*
+>   * *Repository Foundation Services - набор от локални Java интерфейси, обхващащи всички възможности, което е идеално за клиенти, които желаят да го маниполират локално.*
+> *Другите две API-та са вдигнати върху Foundation Services(те) и това ни позволява да се използва напълно от логиката на модела на съдържанието и правилата.* 
+>   * *Java Content Repository (JCR) API - е стандартно Java API достъпващо хранилищата на съдържанието (стандартен достъп за четене и писане).*
+>   * *Web Services - поддържа външния достъп и  supports remote access and bindings to any client environment, not just Java.*
+
+
+### Repository Deployment Options
+*Alfresco Repository is designed to be deployed in a variety of environments and deployment topologies. Much of support for this comes from the Spring Framework.*
+*Хранилището е проектирано да може да се използва от много различни среди. Голяма част на подръжката идва от Spring Framework.*
+
+#### Embedded Repository
+> An Embedded Repository is contained directly within a host where the host communicates with the Repository in the same process via the Repository Foundation Services.
+
+> *Вградено хранилище се съдържа директно в хост, където хостът комуникира с хранилището в същия процес чрез Repository Foundation Services.*
+
+>  Typical hosts include content-rich Client applications that require content-oriented storage, retrieval and services.
+
+> *Типичните хостове включват клиентски приложения с много съдържание, които изискват хранилище (място) за съхранение на съдържание, извличане и услуги, ориентирани към съдържанието.*
+
+> Other hosts include test harnesses and Repository client samples.
+
+> *Други хостове включват тестове и примери.*
+
+> These usually initialise a Repository on start-up and then close the Repository on shut-down.
+
+> *Обикновено се инициализира хранолището при старт и се затваря при изключване.*
+
+
+#### Repository Server
+> A Repository Server is a stand-alone server capable of servicing requests over remote protocols and providing appropriate responses.
+
+> *Repository Server е самостоятелен сървър, способен да обслужва заявки през отдалечени протоколи и да предоставя подходящи отговори.*
+
+> A single server can support any number of different applications and clients.  New applications may be added arbitrarily.
+
+> *Един сървър може да поддържа произволен брой различни приложения и клиенти. Нови приложения могат да се добавят произволно.*
+
+
+#### Repository Application Server
+
+> The Repository is still deployed within a Web Server, but instead of exposing a set of remote protocols for client communication, a Web Application is bundled instead.
+
+> *Хранилището все още е разположено в рамките на уеб сървър, но вместо да излага набор от отдалечени протоколи за комуникация с клиенти, вместо това се включва в уеб приложението.*
+
+> The Web Application becomes the host for an embedded Repository and remote access is via the Application i.e. HTTP.
+
+> *Уеб приложението става хост за вградено хранилище и отдалеченият достъп е чрез приложението, т.е. HTTP.*
+
+
+#### Clustered Repository Server
+
+> A Clustered Repository Server supports large numbers of requests by employing multiple processes against a single Repository store.
+
+> *Clustered Repository Server поддържа голям брой заявки от много процеси към едно хранилище.*
+
+> Each Embedded Repository is hosted in its own Web Server and the collection as a whole (i.e. the Cluster) acts as a single Repository.
+
+> *Всяко Embedded Repository е качено (хостнато) на собствен уеб сървър и всички заедно като Кластър, действат като едно хранилище.*
+
+
+#### Hot Backup
+
+> One Repository Server is designated the Master and another completely separate Repository Server is designated the Slave.
+
+> *Един Repository Server е Master, а друг напълно отделен е Slave.*
+
+> The live application is hosted on the Master and as it used, synchronous and asynchronous replication updates are made to the Slave i.e. the backup (read-only mode).
+
+> *Приложението се хоства на Master-а и синхронно или асинхронно ъпдейтва Slave-а, който е само в режим на четене.*
+
+
+## Apache Tika
+
+*This is used for both metadata extraction, and content transformation.*
+*Използва се за извличане на метаданни и трансформация на съдържанието.*
+
+> * For metadata extraction:
+>   * it allows easy extraction of the metadata of documents and their translation into your content model.
+
+> * *За извличане на метаданни:*
+>   * *позволява лесно извличане на метаданни от документи и тяхната трянсформация в модела на съдържанието.*
+
+> * For content transformation:
+>   * it allows the production of plain text, HTML and XML (XHTML) versions of content.
+
+> * *За трансформация на съдържание:*
+>   * *позволява продукцията на текст - HTML и XML (XHTML) версии на съдържанието.*
+
+### Tika and Metadata Extraction
+*Many of the existing extractors in Alfresco have been converted to use Tika.*
+*Много от съществуващите extractor-и в Alfresco използват Tika.*
+
+#### Auto Detect
+
+> The Auto-Detect parser allows the extraction of metadata from any files which are supported by Tika, but where no dedicated metadata extractor exists.
+> It provides a common set of mappings from Tika metadata to the Alfresco content model, which will be used across all files that are handled by the auto-detect parser fall-back.
+
+> *Auto-Detect parser позволява извличането на метаданните от всякакви файлове, които са поддържани от Tika, където не съществува специален екстрактор на метаданни.*
+> *То предоставя общ набор от съпоставяния от метаданните на Tika към Alfresco модел на съдържанието, който ще се използва във всички файлове, които се обработват от автоматичното откриване отстъпник на парсер.*
+
+#### For full control
+
+> * Firstly:
+>   * You should create a new Metadata Extractor class that extends from org.alfresco.repo.content.metadata.TikaPoweredMetadataExtracter
+>   * Your class should register the mimetypes it handles via the contructor of the superclass, and override the getParser method to return the appropriate Tika Parser object for your file type
+>   * If needed, you can also override the extractSpecific method to control the mapping
+
+> * Once you have written your extractor class:
+>   * You need to register it with the repository
+>   * Configure the mappings
+
+
+## Version and History of a file
+
+> Uploading a new version of a file means replacing the content and creating a new entry in the version history.
+
+> *Качването на нова версия на файл означава подмяна на съдържанието и създаване на нов запис в историята на версиите.*
+
+## Get file version history 
+*https://docs.alfresco.com/content-services/6.0/develop/rest-api-guide/folders-files/*
+> When a file has versioning turned on you can get its version history.
+
+> *Когато даден файл има включено управление на версии, можете да получите историята на версиите му.*
+
+> When we have a file with versioning turned on (i.e. the cm:versionable aspect applied) we can retrieve its version history. This will give us information about all the previous versions of the file that are available for download. 
+
+> *Когато имаме файл с включено управление на версиите, можем да извлечем неговата история на версиите. Това ще ни даде информация за всички предишни версии на файла, които са достъпни за изтегляне.*
