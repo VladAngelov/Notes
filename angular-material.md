@@ -33,3 +33,5 @@ Link the text input to its panel - can do this by exporting the autocomplete pan
 ```
 
 ## Adding a custom filter
+
+*https://material.angular.io/components/autocomplete/overview*
