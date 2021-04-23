@@ -1,4 +1,7 @@
 # Notes
 
-> Useful notes.
-1. test
+* Useful notes for:
+  * Activiti
+  * Alfresco
+  * JSON-XML
+  * Alngular   
