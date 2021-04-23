@@ -5,7 +5,7 @@
 
 ### Simple autocomplete
 
-###### Start
+#### Start
 Creating the autocomplete panel and the options displayed inside it. 
 Each option should be defined by a **mat-option** tag. 
 
@@ -17,7 +17,7 @@ Each option should be defined by a **mat-option** tag.
     </mat-autocomplete>
 ```
 
-###### Next
+#### Next
 Create the input and set the matAutocomplete input to refer to the template reference we assigned to the autocomplete.
 
 *Note: It is possible to use template-driven forms instead, if you prefer. We use reactive forms in this example because it makes subscribing to changes in the input's value easy. For this example, be sure to import **ReactiveFormsModule** from **@angular/forms** into your NgModule.*
