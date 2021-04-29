@@ -3,7 +3,8 @@
 
 ## JSON
 
-*What is JSON?*
+> *What is JSON?*
+
 JSON is an abbreviation for Javascript Object Notation.
 Most commonly used for client-server communication.
 We can easy to save it to a file or record in the database. 
@@ -18,7 +19,8 @@ A JSON value can be another JSON object, array, number, string, boolean (true/fa
 
 
 ## JSON Schema
-*What is JSON Schema?*
+> *What is JSON Schema?*
+
 A declarative language for validating the format and structure of a JSON Object.
 It allows us to specify the number of special primitives to describe exactly what a valid JSON Object will look like.
 * The JSON Schema specification is divided into three parts:
@@ -28,8 +30,8 @@ It allows us to specify the number of special primitives to describe exactly wha
 
 
 ## XML
+> *What is XML?*
 
-*What is XML?*
 XML stands for eXtensible Markup Language also called the extensible markup language proposed by the World Wide Web Consortium (http://www.w3.org/) to create other markup languages.
 This is a simple subset that can describe many different types of data, so it is very useful in sharing data between systems.
 Tags in XML are often not predefined, but they are created according to user conventions.
@@ -54,7 +56,7 @@ Serialized data can be transferred through a network or stored, and recreated wh
 
 Deserialization takes a series of bytes and converts it to an in-memory data structure that can be consumed programmatically.
 
-*Marshal and Unmarshal are synonymous with Serialize and Deserialize.*
+> *Marshal and Unmarshal are synonymous with Serialize and Deserialize.*
 
 * The thing to understand is how those stream of bytes are interpreted or manipulated so that we get the exact same Object/ same state. There are various ways to achieve that. Some of them are:
     * XML: Convert Object to XML, transfer it over a network or store it in a file/db. Retrieve it and convert it back to the object with same state. In Java we use JAXB(Java architecture for XML binding) library.(From java 6 it comes bundled with JDK).
@@ -63,7 +65,8 @@ Deserialization takes a series of bytes and converts it to an in-memory data str
 
 
 ### JSON-Java library
-> org.json (https://search.maven.org/classic/#search%7Cgav%7C1%7Cg%3A%22org.json%22%20AND%20a%3A%22json%22)
+> *org.json (https://search.maven.org/classic/#search%7Cgav%7C1%7Cg%3A%22org.json%22%20AND%20a%3A%22json%22)*
+
 Provides us with classes that are used to parse and manipulate JSON in Java.
 convert between JSON, XML, HTTP Headers, Cookies, Comma-Delimited List or Text, etc.
 
