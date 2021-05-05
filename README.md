@@ -6,3 +6,4 @@
   * JSON-XML
   * Alngular   
   * LDAP and Active Directory
+  * JNDI
