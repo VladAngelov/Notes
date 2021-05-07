@@ -88,11 +88,12 @@ This package is primarily for those applications that need to use "extended" ope
 * Unsolicited Notifications
     * In addition to the normal request/response style of interaction between the client and server, the LDAP v3 also specifies unsolicited notifications--messages that are sent from the server to the client asynchronously and not in response to any client request.
 
-##### The LDAP Context
+#### The LDAP Context
 The *LdapContext* interface represents a context for performing "extended" operations, sending request controls, and receiving response controls.
 Examples of how to use these features are described in the JNDI Tutorial's Controls and Extensions lesson. *https://docs.oracle.com/javase/jndi/tutorial/ldap/ext/index.html*
 
-##### Controls and Extensions
+#### Controls and Extensions
+> *The javax.naming.ldap Package*
 The LDAP v3 was designed with extensibility in mind. 
 It is extensible in two ways: by using *controls* and by using *extensions*. 
 
@@ -101,3 +102,12 @@ It is extensible in two ways: by using *controls* and by using *extensions*.
     * Any number of controls may be sent along with an LDAP request, and any number of controls may be returned with its results.
     * Controls can be standard or proprietary.
     * *For example, you can send a Sort control along with a "search" operation that tells the server to sort the results of the search according to the "name" attribute.*
+
+* Extensions
+    * In addition to the repertoire of predefined operations, such as "search" and "modify," the LDAP v3 defines an "extended" operation.
+    * The "extended" operation takes a request as the argument and returns a response.
+    * The request contains:
+        * An identifier that identifies the request and the arguments of the request;
+        * And the response contains the results of performing the request.
+    * The pair of extended operation request/response is called an extension.
+    * *For example, an extension is possible for Start TLS, which is a request for the client to the server to activate the TLS protocol. These extensions can be standard (defined by the LDAP community) or proprietary (defined by a particular directory vendor).*
