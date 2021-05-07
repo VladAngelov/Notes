@@ -56,7 +56,7 @@ It extends the v1.1 and v1.2 platforms to provide naming and directory functiona
 The *javax.naming.directory* package extends the *javax.naming* package to provide functionality for accessing directory services in addition to naming services.
 This package allows applications to retrieve associated with objects stored in the directory and to search for objects using specified attributes.
 
-##### The Directory Context
+#### The Directory Context
 The *DirContext* interface represents a directory context.
 *DirContext* also behaves as a naming context by extending the Context interface - any directory object can also provide a naming context.
 It defines methods for examining and updating attributes associated with a directory entry.
@@ -92,7 +92,7 @@ This package is primarily for those applications that need to use "extended" ope
 The *LdapContext* interface represents a context for performing "extended" operations, sending request controls, and receiving response controls.
 Examples of how to use these features are described in the JNDI Tutorial's Controls and Extensions lesson. *https://docs.oracle.com/javase/jndi/tutorial/ldap/ext/index.html*
 
-#### Controls and Extensions
+### Controls and Extensions
 > *The javax.naming.ldap Package*
 The LDAP v3 was designed with extensibility in mind. 
 It is extensible in two ways: by using *controls* and by using *extensions*. 
@@ -111,3 +111,133 @@ It is extensible in two ways: by using *controls* and by using *extensions*.
         * And the response contains the results of performing the request.
     * The pair of extended operation request/response is called an extension.
     * *For example, an extension is possible for Start TLS, which is a request for the client to the server to activate the TLS protocol. These extensions can be standard (defined by the LDAP community) or proprietary (defined by a particular directory vendor).*
+
+#### Controls
+*A request control is sent from the client to the server along with an LDAP operation. A response control is sent from the server to the client along with an LDAP response.*
+
+* A control can be either:
+    * a request control - а control that accompanies an LDAP v3 request sent by the client. The JNDI has two types of request controls: 
+        * those that are associated with connection establishment, called connection request controls
+        * and those that are associated with a context, called context request controls
+        
+    * a response control - а control that accompanies an LDAP v3 response sent by the server. 
+
+> *Criticality*
+When a client sends a request control to a server, it specifies the control's criticality.
+The criticality determines whether the server can ignore the request control. 
+When it receives a critical request control, it must either process the request with the control or reject the entire request.
+When a server receives a noncritical request control, it must process the request either with the control or by ignoring the control.
+It can't reject the request simply because it does not support the control (supposed to send back an "unsupported critical extension" error,).
+*You use Control.isCritical() to determine whether a control is critical.*
+
+> *Identification*
+A designer defining a control must assign it a unique object identifier (OID).
+
+*You use Control.getID() to get a control's identifier.* 
+
+> *Encoding*
+A control's definition specifies how it is to be encoded and transmitted between client and server.
+This encoding is done by using ASN.1 BER.
+Typically, an application does not need to deal with a control's encoding.
+This is because the implementation classes for a control deal with any encoding/decoding, as well as provide the application with type-friendly interfaces for constructing and accessing a control's fields.
+Service providers use *Control.getEncodedValue()* to retrieve a control's encoded value for transmission to the server.
+
+#### "Extended" Operations
+*The LDAP v3 defines the "extended" operation, which takes a request as the argument and returns a response. The request contains an identifier that identifies the request and the arguments of the request. The response contains the results of performing the request. The pair of "extended" operation request/response is called an extension.*
+
+The *javax.naming.ldap* package defines the interface *ExtendedRequest* to represent the argument to an "extended" operation, and the interface *ExtendedResponse* to represent the result of the operation. 
+An extended response is usually paired with an extended request but not necessarily vice versa. 
+That is, you can have an extended request that has no corresponding extended response.
+
+> *Extensions Supported by LDAP Servers*
+Support for specific extensions is LDAP server-dependent. Eventually, when extensions are standardized, a set of popular extensions supported by most LDAP servers might be available. 
+However, proprietary and vendor-specific extensions might still be around. 
+*Here is a simple program for finding out the list of extensions that an LDAP server supports:*
+```java
+import javax.naming.*;
+import javax.naming.directory.*;
+import java.util.Hashtable;
+/**
+ * Demonstrates how to discover a server's supported extensions.
+ *
+ * usage: java ServerExts
+ */
+class ServerExts {
+    public static void main(String[] args) {
+        try {
+            // Create initial context
+            DirContext ctx = new InitialDirContext();
+
+            // Read supportedextension from root DSE
+            Attributes attrs = ctx.getAttributes(
+            "ldap://localhost:389", new String[]{"supportedextension"});
+
+            System.out.println(attrs);
+
+            // Close the context when we're done
+            ctx.close();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+
+> *Implementations*
+
+You typically will deal with implementation classes that implement *ExtendedRequest* and *ExtendedResponse* rather than directly use their methods. 
+Such implementation classes typically have type-friendly constructors and accessor methods. 
+
+*For example, suppose that an LDAP server supports a Get Time "extended" operation. It would supply classes such as GetTimeRequest and GetTimeResponse, so that applications can use this feature. An application would use these classes as follows.*
+```java
+// Invoke the "extended" operation
+GetTimeResponse resp =
+    (GetTimeResponse) lctx.extendedOperation(new GetTimeRequest());
+
+// Get the "extended" operation's (decoded) response
+long time = resp.getTime();
+```
+
+*The GetTimeRequest and GetTimeResponse classes might be defined as follows.*
+```java
+public class GetTimeRequest implements ExtendedRequest {
+    // User-friendly constructor 
+    public GetTimeRequest() {
+    };
+
+    // Methods used by service providers
+    public String getID() {
+        return GETTIME_REQ_OID;
+    }
+    public byte[] getEncodedValue() {
+        return null;  // No value is needed for the Get Time request
+    }
+    public ExtendedResponse createExtendedResponse(
+        String id, byte[] berValue, int offset, int length) throws NamingException {
+        return new GetTimeResponse(id, berValue, offset, length);
+    }
+}
+
+public class GetTimeResponse implements ExtendedResponse {
+    long time;
+    // Called by GetTimeRequest.createExtendedResponse()
+    GetTimeResponse(String id, byte[] berValue, int offset, int length) 
+        throws NamingException {
+        // Check the validity of the id
+        long time =  ... // Decode berValue to get the time
+    }
+
+    // These are type-safe and user-friendly methods
+    public java.util.Date getDate() { return new java.util.Date(time); }
+    public long getTime() { return time; }
+
+    // These are low-level methods
+    public byte[] getEncodedValue() {
+        return // berValue saved;
+    }
+    public String getID() {
+        return GETTIME_RESP_OID;
+    }
+}
+```
