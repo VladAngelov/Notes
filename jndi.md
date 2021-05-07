@@ -48,3 +48,56 @@ It extends the v1.1 and v1.2 platforms to provide naming and directory functiona
     * javax.naming.event
     * javax.naming.ldap
     * javax.naming.spi
+
+
+### Directory and LDAP Packages
+
+#### Directory Package
+The *javax.naming.directory* package extends the *javax.naming* package to provide functionality for accessing directory services in addition to naming services.
+This package allows applications to retrieve associated with objects stored in the directory and to search for objects using specified attributes.
+
+##### The Directory Context
+The *DirContext* interface represents a directory context.
+*DirContext* also behaves as a naming context by extending the Context interface - any directory object can also provide a naming context.
+It defines methods for examining and updating attributes associated with a directory entry.
+
+* Attributes
+    * You use getAttributes() method to retrieve the attributes associated with a directory entry (for which you supply the name). Attributes are modified using modifyAttributes() method.
+    * You can add, replace, or remove attributes and/or attribute values using this operation.
+
+* Searches
+    * *DirContext* contains methods for performing content based searching of the directory.
+    * In the simplest and most common form of usage, the application specifies a set of attributes possibly with specific values to match and submits this attribute set to the search() method.
+    * Other overloaded forms of search() support more sophisticated search filters.
+
+#### LDAP Package
+
+The *javax.naming.ldap* package contains classes and interfaces for using features that are specific to the LDAP v3 that are not already covered by the more generic *javax.naming.directory* package.
+Most JNDI applications that use the LDAP will find the *javax.naming.directory* package sufficient and will not need to use the *javax.naming.ldap* package at all.
+This package is primarily for those applications that need to use "extended" operations, controls, or unsolicited notifications.
+
+* "Extended" Operation
+    * In addition to specifying well defined operations such as search and modify, the LDAP v3 (RFC 2251) specifies a way to transmit yet-to-be defined operations between the LDAP client and the server. These operations are called "extended" operations.
+    * An "extended" operation may be defined by a standards organization such as the Internet Engineering Task Force (IETF) or by a vendor.
+
+* Controls
+    * The LDAP v3 allows any request or response to be augmented by yet-to-be defined modifiers, called controls . A control sent with a request is a request control and a control sent with a response is a response control.
+    * A control may be defined by a standards organization such as the IETF or by a vendor.
+    * Request controls and response controls are not necessarily paired, that is, there need not be a response control for each request control sent, and vice versa.
+
+* Unsolicited Notifications
+    * In addition to the normal request/response style of interaction between the client and server, the LDAP v3 also specifies unsolicited notifications--messages that are sent from the server to the client asynchronously and not in response to any client request.
+
+##### The LDAP Context
+The *LdapContext* interface represents a context for performing "extended" operations, sending request controls, and receiving response controls.
+Examples of how to use these features are described in the JNDI Tutorial's Controls and Extensions lesson. *https://docs.oracle.com/javase/jndi/tutorial/ldap/ext/index.html*
+
+##### Controls and Extensions
+The LDAP v3 was designed with extensibility in mind. 
+It is extensible in two ways: by using *controls* and by using *extensions*. 
+
+* Controls
+    * The LDAP v3 allows the behavior of any operation to be modified through the use of controls.
+    * Any number of controls may be sent along with an LDAP request, and any number of controls may be returned with its results.
+    * Controls can be standard or proprietary.
+    * *For example, you can send a Sort control along with a "search" operation that tells the server to sort the results of the search according to the "name" attribute.*
