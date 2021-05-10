@@ -93,7 +93,7 @@ The *LdapContext* interface represents a context for performing "extended" opera
 Examples of how to use these features are described in the JNDI Tutorial's Controls and Extensions lesson. *https://docs.oracle.com/javase/jndi/tutorial/ldap/ext/index.html*
 
 ### Controls and Extensions
-> *The javax.naming.ldap Package*
+*The javax.naming.ldap Package*
 The LDAP v3 was designed with extensibility in mind. 
 It is extensible in two ways: by using *controls* and by using *extensions*. 
 
@@ -182,7 +182,6 @@ class ServerExts {
     }
 }
 ```
-
 
 > *Implementations*
 
