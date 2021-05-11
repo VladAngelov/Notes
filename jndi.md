@@ -244,10 +244,7 @@ public class GetTimeResponse implements ExtendedResponse {
 ### Example for connecting with AD
 
 ```java
-package bg.bulsi.fmfib.service;
-
 import org.springframework.stereotype.Service;
-
 import javax.naming.AuthenticationException;
 import javax.naming.AuthenticationNotSupportedException;
 import javax.naming.Context;
@@ -264,11 +261,11 @@ public class LdapService {
     private static final String ERROR_PASSWORD_OR_USERNAME = "Incorrect password or username";
     private static final String ERROR_CREATE_CONTEXT = "Error when trying to create the context";
 
-    private static final String LDAP_URL = "ldap://10.10.0.169:389";
+    private static final String LDAP_URL = "ldap://ip:port";
     private static final String CONTEXT_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
     private static final String AUTHENTICATION = "simple";
-    private static final String PASSWORD = "123456";
-    private static final String USER_NAME = "FUND-TEST1\\Administrator";
+    private static final String PASSWORD = "******";
+    private static final String USER_NAME = "Username";
 
     private DirContext context;
 
