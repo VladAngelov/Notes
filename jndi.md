@@ -240,3 +240,69 @@ public class GetTimeResponse implements ExtendedResponse {
     }
 }
 ```
+
+### Example for connecting with AD
+
+```java
+package bg.bulsi.fmfib.service;
+
+import org.springframework.stereotype.Service;
+
+import javax.naming.AuthenticationException;
+import javax.naming.AuthenticationNotSupportedException;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import java.util.Hashtable;
+
+@Service
+public class LdapService {
+
+    private static final String SUCCESSFUL_CONNECTION = "Connected";
+    private static final String ERROR_AUTH_NOT_SUPPORTED = "The authentication is not supported by the server";
+    private static final String ERROR_PASSWORD_OR_USERNAME = "Incorrect password or username";
+    private static final String ERROR_CREATE_CONTEXT = "Error when trying to create the context";
+
+    private static final String LDAP_URL = "ldap://10.10.0.169:389";
+    private static final String CONTEXT_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
+    private static final String AUTHENTICATION = "simple";
+    private static final String PASSWORD = "123456";
+    private static final String USER_NAME = "FUND-TEST1\\Administrator";
+
+    private DirContext context;
+
+    public void getConnect() {
+        Hashtable<String, String> env = new Hashtable<>();
+
+        env.put(Context.INITIAL_CONTEXT_FACTORY, CONTEXT_FACTORY);
+        env.put(Context.PROVIDER_URL, LDAP_URL);
+        env.put(Context.SECURITY_AUTHENTICATION, AUTHENTICATION);
+
+        env.put(Context.SECURITY_PRINCIPAL, USER_NAME);
+        env.put(Context.SECURITY_CREDENTIALS, PASSWORD);
+
+        try {
+            DirContext ctx = new InitialDirContext(env);
+            context = ctx;
+
+            System.out.printf("\n Context -->> %s \n ", context);
+            System.out.printf("\n %s \n", SUCCESSFUL_CONNECTION);
+            System.out.printf("\n CTX Environment: \n %s \n", ctx.getEnvironment());
+
+            // do something useful with the context...
+
+            ctx.close();
+
+        } catch (AuthenticationNotSupportedException ex) {
+            System.out.printf("\n %s --> %s \n", ERROR_AUTH_NOT_SUPPORTED, ex.getMessage());
+        } catch (AuthenticationException ex) {
+            System.out.printf("\n %s --> %s \n", ERROR_PASSWORD_OR_USERNAME, ex.getMessage());
+        } catch (NamingException ex) {
+            System.out.printf("\n %s --> %s \n", ERROR_CREATE_CONTEXT, ex.getMessage());
+        }
+
+        System.out.printf("\n Context -->> %s \n ", context);
+    }
+}
+```
