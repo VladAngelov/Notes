@@ -7,9 +7,15 @@ The Lightweight Directory Access Protocol is an open, vendor-neutral, industry s
 
 LDAP is specified in a series of **Internet Engineering Task Force** (IETF) Standard Track publications called Request for Comments (RFCs), using the description language **ASN.1**.
 
-A common use of LDAP is to provide a central place to store usernames and passwords. This allows many different applications and services to connect to the LDAP server to validate users.[4]
+A common use of LDAP is to provide a central place to store usernames and passwords. This allows many different applications and services to connect to the LDAP server to validate users.
 
-LDAP is based on a simpler subset of the standards contained within the **X.500** standard. Because of this relationship, LDAP is sometimes called X.500-lite
+LDAP is based on a simpler subset of the standards contained within the **X.500** standard. Because of this relationship, LDAP is sometimes called X.500-lite.
+
+* LDAP Syntax
+    * CN=Bob,OU=Users,DC=Youtube,DC=Com
+    * CN = Canonical Name (object or name)
+    * OU = Organizational Unit (Folder in Active directory)
+    * DC = Domain Controller (Where it is)
 
 ### Directory Service
 In computing, a directory service or name service maps the names of network resources to their respective network addresses. It is a shared information infrastructure for locating, managing, administering and organizing everyday items and network resources, which can include volumes, folders, files, printers, users, groups, devices, telephone numbers and other objects. A directory service is a critical component of a network operating system. A directory server or name server is a server which provides such a service. Each resource on the network is considered an object by the directory server. Information about a particular resource is stored as a collection of attributes associated with that resource or object.
