@@ -50,3 +50,16 @@ However, Active Directory became an umbrella title for a broad range of director
 A server running the Active Directory Domain Service (AD DS) role is called a domain controller. It authenticates and authorizes all users and computers in a Windows domain type network. Assigning and enforcing security policies for all computers and installing or updating software.
 
 Active Directory uses Lightweight Directory Access Protocol (LDAP) versions 2 and 3, Microsoft's version of Kerberos and DNS.
+
+### Active Directory Sub-Error Codes
+When an authentication fails, resulting in a standard LDAP 49 error code, Active Directory also supplies its own sub-error codes within the error message. 
+These will be used to provide additional log information on why an authentication has failed.
+* Typical examples are:
+   * 525 - user not found
+   * 52e - invalid credentials
+   * 530 - not permitted to logon at this time
+   * 532 - password expired
+   * 533 - account disabled
+   * 701 - account expired
+   * 773 - user must reset password
+   * 775 - account locked
