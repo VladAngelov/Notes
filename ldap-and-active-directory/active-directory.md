@@ -74,3 +74,19 @@ Quotas are specified and administered for each directory partition separately, t
     * Sites that do not have their own domain controllers and at least one global catalog are dependent on other sites for directory information and are less efficient.
 
 * Perform regular backups of domain controllers in order to preserve all trust relationships within that domain.
+
+
+## Designing the Logical Structure
+
+### Creating a Forest Design
+*https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/creating-a-forest-design*
+* Creating a forest design involves:
+    * First identifying the groups within your organization that have the resources available to host an Active Directory forest and then defining your forest design requirements.
+    * You need to determine the number of forests that you require to meet the needs of your organization.
+    * After you map all your design requirements to forest models and select the forest model that meets the needs of your organization, document the proposed forest design.
+    * Include in your documentation (*will help the design team both to ensure that all the appropriate people are involved in the design process and to clarify the scope of the deployment project*):
+        * the name of the group for which the forest is designed
+        * the contact information for the forest owner
+        * the type of forest for each forest that you include
+        * the requirements that each forest is designed to meet. 
+        
