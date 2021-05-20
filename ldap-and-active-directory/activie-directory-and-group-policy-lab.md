@@ -75,7 +75,7 @@ GPOs съдържат настройки и конфигурации, които
 1. Първо се прилагат настройките на компютъра
 2. След това тези на потребителя
 
-> *Последно приложенотот GPO побеждава!*
+> *Последно приложеното GPO побеждава!*
 
 * Blocked Inheritance
     * OU могат да блокират наследяването;
@@ -91,13 +91,23 @@ Group Policy Management Editor се използва за редакция на 
 *RSOP.msc - Resultant Set of Policy*
 Чрез търсене на "rsop.msc" в търсачката на компютъра или C:/Windows/System32/rsop.msc
 
+## 24. Troubleshooting Group Policy with Command Prompt (GPResult /r)
+
 CMD команда: | описание
 -------------|---------------
-gpresoult /r | */r за репорт*
+gpresoult /r | */r* за репорт
 gpupdate | ъпдейт на политиките
+gpupdate /force | за да се ативират новите политики
+
 
 Важен резултат от *gpresoult /r* e **Applied Group Policy Objects**. Чрез този резултат най-лесно се проверява дали е приложена дадена политика към компютъра, на който е стартирана командата.
 
 
-## 24. Creating Non-Inheriting Organizational Unit for GPO / Troubleshooting
+## 25. Creating Non-Inheriting Organizational Unit for GPO Testing / Troubleshooting
+
+*При промяна на политиките - добавяне или премахване на наследяване се изпълнява команда gpupdate*.
+Най-лесния начин да се разбира дали има наследяване на политики, е чрез наименоване с "Non-inheriting".
+
+
+## 26. Deploying a Desktop Background to your domain with a GPO (Group Policy Object)
 
