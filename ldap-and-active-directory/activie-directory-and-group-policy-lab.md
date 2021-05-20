@@ -81,3 +81,23 @@ GPOs съдържат настройки и конфигурации, които
     * OU могат да блокират наследяването;
     * Само GPO, което е в OU, ще бъде приложено;
     * Освен принудителното GPO;
+
+
+## 22. Edit GPOs
+
+Group Policy Management Editor се използва за редакция на политиките на компютър и потребител. (маркиране на *GPO -> Edit*)
+
+## 23. Troubleshooting Group Policy with MMC
+*RSOP.msc - Resultant Set of Policy*
+Чрез търсене на "rsop.msc" в търсачката на компютъра или C:/Windows/System32/rsop.msc
+
+CMD команда: | описание
+-------------|---------------
+gpresoult /r | */r за репорт*
+gpupdate | ъпдейт на политиките
+
+Важен резултат от *gpresoult /r* e **Applied Group Policy Objects**. Чрез този резултат най-лесно се проверява дали е приложена дадена политика към компютъра, на който е стартирана командата.
+
+
+## 24. Creating Non-Inheriting Organizational Unit for GPO / Troubleshooting
+
