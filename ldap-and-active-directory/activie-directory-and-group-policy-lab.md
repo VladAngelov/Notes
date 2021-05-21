@@ -111,3 +111,61 @@ gpupdate /force | за да се ативират новите политики
 
 ## 26. Deploying a Desktop Background to your domain with a GPO (Group Policy Object)
 
+*Най-добре да се създават винаги GPO.*
+
+Създаване на Share на папката с картинките, които искаме. Добавяме резрешенията за потребител или група (може и за определен домейн).
+В Group Policy Management Editor:
+User Configuration --> Policies --> Administrative Templates: Policy --> Desktop --> Desktop --> Desktop Wallpaper(Edit) -> Enabled -> Add path or locatio (*\\SERVER_NAME\Desktop Backgroung\image_name.extension*)
+*Може да се изпробва, като се постави пътя в браузъра, трябва да зареди дадената картинка.*
+
+## 27. Setting up an Logo Banner (Interactive Logon)
+
+*Server manager --> Tools --> Group Policy Management*
+В domain-а създаване ново GPO, избираме *Edit --> Policies --> Windows Settings --> Security Settings --> Local Policies --> Security Options -> GPO_Name:Message tittle for users...*.
+> MCD: gpupdate /force (за ъпдейт на политиката)
+
+## 28. Deploying Software with Group Policy
+
+1. Пресместване/копираме в Share пространството, в избрана папка, добавя се права за определен потребител (група).
+2. В домейна се добавя GPO за всяко приложение. Чрез *Edit --> Computer Configuration --> Policies --> Software Settings --> Software installation --> New -->(Open->Network\Share\software_folder_name\software_name.msi)*, след избиране на файла, определяме метода:
+    * Published - даваме право на потребителя да инсталира software-a;
+    * Assigned - инсталиране без да се правят модификации
+    * Advanced - инсталиране с възможност за модификации
+
+> MCD: gpupdate /force (за ъпдейт на политиката и инсталацията на software-a при рестарт)
+
+*Препоръчва се да се добави в Computer Configuration, а не в User Configuration.*
+
+## 29. Configuring Roaming Profiles for User Accounts
+
+Създаване на ново споделено пространство:
+
+> *Server Manager --> File and Storage Services --> Shares -> New Share -> Select type -> Select volume -> Share Name(Name$ прави папкара скрита) -> Допълнителни настройки -> Избиране права за достъп*
+
+Разрешаване достъп на потребител до споделеното пространство (в *Настройване на правата*): 
+
+> *Server Manager --> Tools --> Active Directory Users and Computers --> Добавяне на OU със SG в него, добавяне на потребители в групата -> Настройване на правата*
+
+> Може да се добавя група в OU.
+
+Wildcard | описание
+-------- | --------
+%username%  (%...%) | в настройките на потребителя за домейна, ще вземе автоматично username-a му
+
+## 30. How to automatically map network share drivres with Group Policy
+1. Добавяне на група:
+> *Server Manager --> Local Server --> Login to DomainController / Tools -> Active Directory Users and Computers --> Добавяне на група в OU (или където ще я държим в домейна) -> Добавяме поребител към нея (от Domain Users) / група*
+
+
+2. Добавяне на споделена папка:
+> *Server Manager --> Tools --> Active Directory Users and Computers --> Домейн->New->Shared Folder (въвеждане на име и мрежови път - \\име_на_сървър\име_на_група)*
+
+
+3. *Server Manager --> Tools --> Group Policy Management Editor* добавяме GPO, за всяка от групите (и споделените пространства)
+    * User Configuration --> Preferences --> Windows Settings -> Drivre Maps -> New -> Mapped Drive -> избираме от вече създадените споделени пространства (спрямо коя група настройваме)
+    * След създаването на Mapped Drive, определяме чрез Security Filtering кои потребители/група ще имат достъп.
+    * След добавянето на потребителите/групите с достъп, избираме правата, които имат над споделеното пространство.
+
+4. gpupdate /force
+
+## 31. Configuring Domain Password and Account Lockout Policies with Group Policy
