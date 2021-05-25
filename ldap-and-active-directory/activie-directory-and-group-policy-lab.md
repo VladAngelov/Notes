@@ -1,6 +1,8 @@
 # Active Directory and Group policy Lab
 *Udemy Course notes*
 
+## 10. Basic Server Configuration
+
 
 ## 17. Groups and Memberships
 * Group scope:
@@ -169,3 +171,26 @@ Wildcard | описание
 4. gpupdate /force
 
 ## 31. Configuring Domain Password and Account Lockout Policies with Group Policy
+*Създаване на правило за по-сложна парола*
+В Default Domain Policy, може да видим вече създадените настройки (по подразбиране). Те могат да се редактират чрез:
+*Edit --> Computer Configuration --> Windows Settings --> Security Settings --> Account Policies --> Password Policy*
+
+## 43. Creating an Active Directory System State Backup
+
+1. За да може да се направи Backup (ако не е инсталирано при създаването на сървъра):
+    * *Add Roles and Features --> Features -> Windows Server Backup (install)*
+2. За създаване на Backup:
+    * *Tools --> Windows Server Backup -> Local Backup(Schedule/Once) -> Backup Options -> Backup Configuration(Custom) -> Add items(System State) -> Remote shared folder(All premistions allowed)*
+
+## 44. Restoring an Active Directory Backup
+За възстановяване на АД, трябва да стартираме на сървъра в режим DRM mode (Directory Services Restore Mode). 
+* За целта:
+    1. чрез търсачката/старт менюто отваряме *msconfig* файла.
+    2. Избираме от табовете на *System Confiuration* таб *Boot* и избираме *Safe boot* *Active Directory repair*.
+    3. Докато се рестартира сървъра се натиска F8(?)
+    4. Избиране от *Advance Boot Options*: *Directory Services Repair Mode* 
+    5. Влизане с локалния администратор *.\administrator*
+    6. В CMD команда: *wbadmin get versions*, за да ни покаже версиите, които имаме.
+    7. Копираме *Version identifier*
+    8. Команда: *wbadmin start systemstaterecovery -version:**Version identifier** -authsysvol* (-authsysvol при множество домейни) 
+    9. 8/9 x Yes
