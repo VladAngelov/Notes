@@ -94,7 +94,8 @@ Group Policy Management Editor се използва за редакция на 
 
 
 ## 23. Troubleshooting Group Policy with MMC
-*RSOP.msc - Resultant Set of Policy*
+> *RSOP.msc - Resultant Set of Policy*
+
 Чрез търсене на "rsop.msc" в търсачката на компютъра или C:/Windows/System32/rsop.msc
 
 
