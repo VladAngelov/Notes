@@ -170,6 +170,7 @@ Wildcard | описание
 
 4. gpupdate /force
 
+
 ## 31. Configuring Domain Password and Account Lockout Policies with Group Policy
 #### Настройките за паролите се правят в Computer Configuration 
 *Създаване на правило за по-сложна парола*
@@ -189,7 +190,35 @@ Wildcard | описание
 * След колко време да се отключи акаунта;
 
 
+## 32. Deploying Fine Grained Password Policies (PSOs)
+#### Настройки на пароли за потребител или група
+*Прави се извън АД и извън политиките на групите.*
 
+1. Създават се чрез *Tools --> ADSI Edit --> Connect to -> (default) -> разгръщане на домейна -> System -> Password Settings Container -> New Object*
+
+2. Въвеждане на следните данни:
+    1. (Common-Name) Value:ДобреОписаниИме 
+    2. (Password Settings Precedence) Value:1(колкото е по-близо до 1, толкова по-голяма тежест има) 
+    3. (Password reverse encryption status for user accounts) Value:FALSE 
+    4. (Password History) Value:24(ex) 
+    5. (Password complexity status for user accounts) Value:TRUE 
+    6. (Minimum Password Length for user accounts) Value:14(ex) 
+    7. (Minimum Password Age for user accounts) Value:00:00:00:00(ex) 
+    8. (Maximum Password Age for user accounts) Value:07:00:00:00(ex) 
+    9. (Lockout threshoul for lockout of user accounts) Value:3(ex) 
+    10. (Observation Window for lockout of user accounts) Value:00:00:15:00(ex) 
+    11. (Lockout duration for lockout of user accounts) Value:00:00:15:00(ex)
+
+3. След като е готово PSO-то, в *Properties -> msDS-PSOAppliesTo<not set> -> Edit -> Add Windows Account(група)*
+
+При избирането на група, тези политики ще се приложат върху всички потребители, участващи в нея.
+В PowerShell се въвежда:
+```powershell
+import-module ActiveDirectory
+
+Get-ADUser -filter {GivenName -like Paul} –Properties "DisplayName", "msDS-UserPasswordExpiryTimeComputed" | Select-Object -Property "DisplayName",@{Name="ExpiryDate";Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}}
+```
+*GivenName - AD attribute, може да бъде различно, спрямо какво е в нашата АД*
 
 ## 43. Creating an Active Directory System State Backup
 
