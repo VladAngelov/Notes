@@ -227,6 +227,17 @@ Get-ADUser -filter {GivenName -like Paul} –Properties "DisplayName", "msDS-Use
 Репортите от Firewall:
 *rsop.msc --> Computer Configuration --> Administrative Templates*
 
+
+## 34. Configuring Windows Registry Settings with Group Policy (GPOs)
+Computer Configuration (позволява да се отварят всички файлове с Notepad, без значение от формата):
+
+1. *Server Manager --> Tools --> Group Policy Management --> Domain(Right-click) -> Create a GPO in this domain, and Link it here... -> Edit --> Windows Configuration --> Windows Settings --> Registry --> New -> Action: Create -> Hive: HKEY_CLASSES_ROOT -> Key Path: HKEY_CLASSES_ROOT\\\*\\shell\Open With Notepad\command -> Value name: Default -> Value type: REG_SZ -> Value data: notepad.exe %1*
+2. CMD: gpupdate /force
+
+User Configuration:
+*Server Manager --> Tools --> Group Policy Management --> Domain(Right-click) -> Create a GPO in this domain, and Link it here... -> Edit -> User Configuration -> Windows Settings -> Registry*
+
+
 ## 43. Creating an Active Directory System State Backup
 
 1. За да може да се направи Backup (ако не е инсталирано при създаването на сървъра):
