@@ -220,6 +220,13 @@ Get-ADUser -filter {GivenName -like Paul} –Properties "DisplayName", "msDS-Use
 ```
 *GivenName - AD attribute, може да бъде различно, спрямо какво е в нашата АД*
 
+## 33. Configuring Windows Firewall with Group Policy
+
+*Server Manager --> Tools --> Group Policy Management --> Select OU(Right-click) -> Create a GPO in this domain, and Link it here... -> Edit -> Computer Configuration -> Windows Settings -> Security Settings -> Windows Firewall with Advanced Security -> Windows Firewall with Advanced Security -> Inbound Rules / Outband Rules -> New Rule*
+
+Репортите от Firewall:
+*rsop.msc --> Computer Configuration --> Administrative Templates*
+
 ## 43. Creating an Active Directory System State Backup
 
 1. За да може да се направи Backup (ако не е инсталирано при създаването на сървъра):
