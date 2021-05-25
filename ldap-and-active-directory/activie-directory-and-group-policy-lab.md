@@ -171,9 +171,25 @@ Wildcard | описание
 4. gpupdate /force
 
 ## 31. Configuring Domain Password and Account Lockout Policies with Group Policy
+#### Настройките за паролите се правят в Computer Configuration 
 *Създаване на правило за по-сложна парола*
 В Default Domain Policy, може да видим вече създадените настройки (по подразбиране). Те могат да се редактират чрез:
 *Edit --> Computer Configuration --> Windows Settings --> Security Settings --> Account Policies --> Password Policy*
+Тук са различни настройки за паролите като:
+* Колко време да се помни паролата - колко пъти, трябва да се смени паролата, за да се използва отново първата;
+* Колко е минималното и максималното време, през което, трябва да се смени паролата;
+* Колко е минималния брой символи;
+* Дали да бъде сложна
+* Начин на запазване - "reversible encryption" (за по-голяма сигурност "Disabled");
+
+*Edit --> Computer Configuration --> Windows Settings --> Security Settings --> Account Policies --> Account Lockout Policy*
+Тук са различни настройки за потребителя като:
+* При колко грешно въведени пароли да бъде заключен акаунта;
+* За колко време да бъде заключен;
+* След колко време да се отключи акаунта;
+
+
+
 
 ## 43. Creating an Active Directory System State Backup
 
