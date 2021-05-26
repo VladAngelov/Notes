@@ -343,9 +343,27 @@ Get-ADGroupMember 'Group Name' | Select-Object AttributeName, AttributeName, ...
 # List all AD users from selected group, pretty and export to csv file
 Get-ADGroupMember 'Group Name' | Select-Object AttributeName, AttributeName, ... | Export-Csv "Location:\to\write\the\file"
 ```
-
 Може да се вземе *-SearchBase* за опреден OU и от *Active Directory Users and Computers --> domain --> OU --> OU -> Propreties*
 
+
+## 38. Configuring User Roaming Profile Path with PowerShell
+*Active Directory Users and Computers --> domain --> OU --> Domain Users -> Propreties*
+
+```powershell
+# Inport AD module
+Import-Module ActiveDirectory
+
+# Get all members of the roaming profile group
+Get-ADGroupMember 'Roaminig Profile Users' |
+    # Loop through each user
+    ForEach-Object {
+        # Do this for each member
+        # $_. <--> object looping through
+        # ("path" + sam account name) <--> to be considered as one unit
+        # -Identity $_.SamAccountName <--> set a user indentity for the current object, same as sam account name
+        Set-ADUser -Identity $_.SamAccountName -ProfilePath ("\\PCNAME\Profiles$\" + $_.SamAccountName)
+    }
+```
 
 ## 43. Creating an Active Directory System State Backup
 
