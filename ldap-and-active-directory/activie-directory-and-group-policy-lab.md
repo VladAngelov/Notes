@@ -310,6 +310,43 @@ Set-ADUser 'user.name' -EmailAddress "user_mail@example.com"
 > *Get-ADUser 'user.name' -Property "value_as_a_string"*
 
 
+## 37. Listing AD Users with PowerShell
+
+```powershell
+# Import the active directory module
+Import-Module ActiveDirectory
+
+# List all AD users (limit of 100 users)
+Get-ADUser -Filter * -ResultSize 100
+
+# List all AD users (limit of 100 users) and readablle
+Get-ADUser -Filter * -ResultSize 100 | Select-Object
+
+# List all AD users (limit of 100 users) and only the names
+Get-ADUser -Filter * -ResultSize 100 | Select-Object Name
+
+# List all AD users (limit of N users) and selected attribute
+Get-ADUser -Filter * -ResultSize N | Select-Object AttributeName, AttributeName, ...
+
+# List all AD users (limit of N users), selected property and selected attribute
+Get-ADUser -Filter * -ResultSize N -Properties PropertyName | Select-Object AttributeName, AttributeName, ...
+
+# List all AD users from selected OU
+Get-ADUser -Filter * -SearchBase "OU=OU name, OU=sub folder name, DC=domain, DC=com/bg/net"
+
+# List all AD users from selected OU and pretty
+Get-ADUser -Filter * -SearchBase "OU=OU name, OU=sub folder name, DC=domain, DC=com/bg/net" | Select-Object Name (example, it can be every attribute)
+
+# List all AD users from selected group and pretty
+Get-ADGroupMember 'Group Name' | Select-Object AttributeName, AttributeName, ...
+
+# List all AD users from selected group, pretty and export to csv file
+Get-ADGroupMember 'Group Name' | Select-Object AttributeName, AttributeName, ... | Export-Csv "Location:\to\write\the\file"
+```
+
+Може да се вземе *-SearchBase* за опреден OU и от *Active Directory Users and Computers --> domain --> OU --> OU -> Propreties*
+
+
 ## 43. Creating an Active Directory System State Backup
 
 1. За да може да се направи Backup (ако не е инсталирано при създаването на сървъра):
