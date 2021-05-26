@@ -248,6 +248,68 @@ PowerShell ISE | ---> | прилича на IDE
 3. CMD: gpupdate /force   
 4. рестарт на PowerShell ISE
 
+
+## 36. PowerShell Basics
+
+Команда | Описание
+------- | --------
+Start-Transcript | Запис на командите, които въвеждаме
+Get-Command *-AD* | Показване на командите, които са свързани с АД
+CLS | почистване на екрана
+Get-Alias | Показване на всички алиаси
+$name | създаване на променлива
+Get-Help command-name | показва информация за командата
+Import-module Active Directory | ще ни позволи да изпълняваме команди като (Get-ADUser) 
+Get-History | ще покаже командите, които е изплнявал потребителя
+Set-ADUser | за попълване на данни
+
+Запис на командите, които въвеждаме:
+```powershell
+Start-Transcript
+```
+Показване на командите, които са свързани с АД:
+```powershell
+Get-Command *-AD*
+```
+Показване на всички алиаси:
+```powershell
+Get-Alias
+```
+Създаване на променлива:
+```powershell
+$NameOfVariable = ...
+```
+Ще ни позволи да изпълняваме команди като (Get-ADUser):
+```powershell
+Import-module Active Directory
+```
+
+Примери, които ще върнат базовата информация за даден потребител:
+1. С *Get-ADUser -Identity <\string>*:
+```powershell
+Get-ADUser -Identity 'Administrator'
+```
+2. С *Get-ADUser -Filter {Name -eq 'string'}*:
+```powershell
+Get-ADUser -Filter {Name -eq 'Administrator'}
+
+Get-ADUser -Filter {ObjectGUID -eq '275aa8f-...'}
+```
+> *Get-ADUser -FIlter {SomeOfAttribute -eq 'string'}*
+
+За добавяне на даден атрибут при извикването на *Get-ADUser*, се използва:
+```powershell
+Get-ADUser -Identity 'Administrator' -Properties Description
+```
+> *Get-ADUser -Identity 'string' -Properties NameOfProperty*
+
+Може да се попълват атрибути чрез *Set-ADUser "user.name" -NameOfAttribute "value_as_a_string"*
+```powershell
+Set-ADUser 'user.name' -EmailAddress "user_mail@example.com"
+```
+> *Get-ADUser 'user.name' -Property "value_as_a_string"*
+
+
 ## 43. Creating an Active Directory System State Backup
 
 1. За да може да се направи Backup (ако не е инсталирано при създаването на сървъра):
@@ -257,13 +319,13 @@ PowerShell ISE | ---> | прилича на IDE
 
 ## 44. Restoring an Active Directory Backup
 За възстановяване на АД, трябва да стартираме на сървъра в режим DRM mode (Directory Services Restore Mode). 
-* За целта:
-    1. чрез търсачката/старт менюто отваряме *msconfig* файла.
-    2. Избираме от табовете на *System Confiuration* таб *Boot* и избираме *Safe boot* *Active Directory repair*.
-    3. Докато се рестартира сървъра се натиска F8(?)
-    4. Избиране от *Advance Boot Options*: *Directory Services Repair Mode* 
-    5. Влизане с локалния администратор *.\administrator*
-    6. В CMD команда: *wbadmin get versions*, за да ни покаже версиите, които имаме.
-    7. Копираме *Version identifier*
-    8. Команда: *wbadmin start systemstaterecovery -version:**Version identifier** -authsysvol* (-authsysvol при множество домейни) 
-    9. 8/9 x Yes
+За целта:
+1. чрез търсачката/старт менюто отваряме *msconfig* файла.
+2. Избираме от табовете на *System Confiuration* таб *Boot* и избираме *Safe boot* *Active Directory repair*.
+3. Докато се рестартира сървъра се натиска F8(?)
+4. Избиране от *Advance Boot Options*: *Directory Services Repair Mode* 
+5. Влизане с локалния администратор *.\administrator*
+6. В CMD команда: *wbadmin get versions*, за да ни покаже версиите, които имаме.
+7. Копираме *Version identifier*
+8. Команда: *wbadmin start systemstaterecovery -version:**Version identifier** -authsysvol* (-authsysvol при множество домейни) 
+9. 8/9 x Yes
