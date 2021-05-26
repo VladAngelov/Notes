@@ -285,7 +285,7 @@ Import-module Active Directory
 ```
 
 Примери, които ще върнат базовата информация за даден потребител:
-1. С *Get-ADUser -Identity <string>*:
+1. С *Get-ADUser -Identity <\string>*:
 ```powershell
 Get-ADUser -Identity 'Administrator'
 ```
