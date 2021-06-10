@@ -365,6 +365,10 @@ Get-ADGroupMember 'Roaminig Profile Users' |
     }
 ```
 
+
+## 39. Creating User Accounts with Powershell
+
+
 ## 43. Creating an Active Directory System State Backup
 
 1. За да може да се направи Backup (ако не е инсталирано при създаването на сървъра):
