@@ -7,3 +7,4 @@
   * Alngular   
   * LDAP and Active Directory
   * JNDI
+  * Delegate Pattern
