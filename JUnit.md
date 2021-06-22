@@ -523,3 +523,71 @@ public class AppTest {
     }
 }
 ```
+
+
+## JUnit Best Practices Guide
+
+### Unit testing is not about finding regression bugs
+
+Unit tests are not an effective way to find application wide bugs or detect regressions defects. 
+Unit tests, by definition, examine each unit of your code separately. 
+But when your application runs for real, all those units have to work together, and the whole is more complex and subtle than the sum of its independently-tested parts. 
+Proving that components X and Y both work independently doesn’t prove that they’re compatible with one another or configured correctly.
+
+If you’re trying to find regression bugs, it’s far more effective to actually run the whole application together as it will run in production, just like you naturally do when testing manually. 
+If you automate this sort of testing in order to detect breakages when they happen in the future, it’s called integration testing and typically uses different techniques and technologies than unit testing.
+
+> *“Essentially, Unit testing should be seen as part of design process, as it is in TDD (**Test Driven Development**)”. This should be used to support the design process such that designer can identify each smallest module in the system and test it separately.*
+
+####  TDD (Test Driven Development)
+
+Test-driven development (TDD) is a software development process relying on software requirements being converted to test cases before software is fully developed, and tracking all software development by repeatedly testing the software against all test cases. 
+This is opposed to software being developed first and test cases created later.
+Programmers also apply the concept to improving and debugging legacy code developed with older techniques.
+
+##### Test-driven development cycle
+1. Add a test
+    - The adding of a new feature begins by writing a test that passes iff(*If and only if*) the feature's specifications are met. 
+     -The developer can discover these specifications by asking about use cases and user stories. 
+     - A key benefit of test-driven development is that it makes the developer focus on requirements *before* writing code. 
+     - This is in contrast with the usual practice, where unit tests are only written *after* code.   
+
+2. Run all tests. The new test *should fail* for expected reasons
+    - This shows that new code is actually needed for the desired feature. 
+    - It validates that the test harness is working correctly.
+    - It rules out the possibility that the new test is flawed and will always pass.
+
+3. Write the simplest code that passes the new test
+    - Inelegant or hard code is acceptable, as long as it passes the test. 
+    - The code will be honed anyway in Step 5. 
+    - No code should be added beyond the tested functionality.
+
+4. All tests should now pass
+    - If any fail, the new code must be revised until they pass. 
+    - This ensures the new code meets the test requirements and does not break existing features.
+
+5. Refactor as needed, using tests after each refactor to ensure that functionality is preserved
+    - Code is refactored for readability and maintainability. 
+    - In particular, hard-coded test data should be removed. 
+    - Running the test suite after each refactor helps ensure that no existing functionality is broken.
+
+    * Examples of refactoring:
+        * moving code to where it most logically belongs
+        * removing duplicate code
+        * making names self-documenting
+        * splitting methods into smaller pieces
+        * re-arranging inheritance hierarchies
+
+
+**Repeat**
+The cycle above is repeated for each new piece of functionality. 
+Tests should be small and incremental, and commits made often. 
+That way, if new code fails some tests, the programmer can simply undo or revert rather than debug excessively. 
+When using external libraries, it is important not to write tests that are so small as to effectively test merely the library itself, unless there is some reason to believe that the library is buggy or not feature-rich enough to serve all the needs of the software under development.
+
+##### Keep the unit small
+For TDD, a unit is most commonly defined as a class, or a group of related functions often called a module. 
+Keeping units relatively small is claimed to provide critical benefits, including:
+* Reduced debugging effort – When test failures are detected, having smaller units aids in tracking down errors.
+* Self-documenting tests – Small test cases are easier to read and to understand.
+
