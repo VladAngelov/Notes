@@ -406,7 +406,38 @@ New-ADUSer `
 
 
 ## 40. Creating User Account from a CSV (Comma Separated Value) File
+*Дадено свойство на потребитела се слага в '' ако съдържа интервал в името си.*
 
+```powershell
+# Import the active directory module
+Import-Module ActiveDirectory
+
+# Get the path to our target CSV file
+$filepath = Read-Host -Prompt "Please enter the path to the CSV file that contains the new user accounts"
+
+# Import the CSV as an array
+$users = Import-CSV $filepath
+
+# Complete an action for each user in the CSV file
+ForEach ($user in $users) {
+    # Do this for each user
+   New-ADUser ` 
+        -Name ($user.'First Name' + " " + $user.'Last Name') `
+        -GivenName $user.'First Name' `
+        -Surname $user.'Last Name'
+        -UserParincipalName ($user.'First Name' + "." + $user.'Last Name') ` 
+        -AccountPassword (ConvertTo-SecureString "P@$$wOrd123" -AsPlainText -Force) `
+        -Description $user.Description `
+        -EmailAddress $user."Email Address"
+        -Path "OU=Domain Users,OU=instructorpaul,DC=instructorpaul,DC=com" `
+        -Title $user.'Job Title'
+        -OfficePhone $user.'Office Phone'
+        -Path $user.'Organizational Unit'
+        -ChangePasswordAtLogon 1 `
+        -Enabled ([System.Convert]::ToBoolean(user.Enabled))    
+}
+
+```
 
 
 ## 43. Creating an Active Directory System State Backup
