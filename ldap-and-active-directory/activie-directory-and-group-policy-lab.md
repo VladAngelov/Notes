@@ -368,6 +368,46 @@ Get-ADGroupMember 'Roaminig Profile Users' |
 
 ## 39. Creating User Accounts with Powershell
 
+В PowerShell ISE:
+
+*Използвайки " ` " (~), може да пишем скрипт на множество редове.*
+
+```powershell
+# Import the active directory module
+Import-Module ActiveDirectory
+
+# Create the AD User (hard code)
+New-ADUSer `
+    -Name "Bradley Beal" `
+    -GivenName "Bradley" `
+    -Surname "Beal" `
+    -UserPrincipalName "Bradley.Beal" `
+    -AccountPassword (ConvertTo-SecureString "P@$$wOrd123" -AsPlainText -Force) `
+    -Path "OU=Domain Users,OU=instructorpaul,DC=instructorpaul,DC=com" `
+    -ChangePasswordAtLogon 1 `
+    -Enabled 1
+
+# Grab variables from user
+$firstname = Read-Host -Prompt "Pleace enter the first name"
+$lastname = Read-Host -Prompt "Pleace enter the last name"
+
+# Create the AD User
+New-ADUSer `
+    -Name "$firstname $lastname" `
+    -GivenName $firstname `
+    -Surname $lastname `
+    -UserPrincipalName "$firstname.$lastname" `
+    -AccountPassword (ConvertTo-SecureString "P@$$wOrd123" -AsPlainText -Force) `
+    -Path "OU=Domain Users,OU=instructorpaul,DC=instructorpaul,DC=com" `
+    -ChangePasswordAtLogon 1 `
+    -Enabled 1    
+```
+Може да се запзаи скрипта и да се изпълнява директно. Ще създаде нов потрбител в активната директория с въведените данни.
+
+
+## 40. Creating User Account from a CSV (Comma Separated Value) File
+
+
 
 ## 43. Creating an Active Directory System State Backup
 
