@@ -421,8 +421,9 @@ $users = Import-CSV $filepath
 # Complete an action for each user in the CSV file
 ForEach ($user in $users) {
     # Do this for each user
-   New-ADUser ` 
-        -Name ($user.'First Name' + " " + $user.'Last Name') `
+
+    New-ADUser ` 
+        -Name ($user.'First Name' + " " + $user.'Last Name' + " " + $accountNumber) `
         -GivenName $user.'First Name' `
         -Surname $user.'Last Name'
         -UserParincipalName ($user.'First Name' + "." + $user.'Last Name') ` 
@@ -436,9 +437,89 @@ ForEach ($user in $users) {
         -ChangePasswordAtLogon 1 `
         -Enabled ([System.Convert]::ToBoolean(user.Enabled))    
 }
-
 ```
 
+
+## 41. Move All Disabled Users to "Disabled Users OU" with PowerShell
+
+```powershell
+# Import the active directory module
+Import-Module ActiveDirectory
+
+# List all disabled AD users 
+Search-ADAccount -AccountDisabled | Select-Object Name, DistinguishedName
+
+# Move All disabled users to disabled users OU
+Search-ADAccount -AccountDisabled | Where {$_.DistinguishedName -notlike "*OU=Disabled Users"} | Move-ADObject -TargetPath "OU=Disabled Users,OU=instructorpaul,DC=instructorpaul,DC=com"
+
+# Disable all users in the disabled users OU
+Get-ADUser -Filter {Enabled -eq $True} -SearchBase "OU=Disabled Users,OU=instructorpaul,DC=instructorpaul,DC=com" | Disable-ADAccount
+```
+
+
+## 42. How to create AD accounts with duplivate names
+
+```powershell
+# Import the active directory module
+Import-Module ActiveDirectory
+
+# Get the path to our target CSV file
+$filepath = Read-Host -Prompt "Please enter the path to the CSV file that contains the new user accounts"
+
+# Import the CSV as an array
+$users = Import-CSV $filepath
+
+# Complete an action for each user in the CSV file
+ForEach ($user in $users) {
+    # Do this for each user
+    
+    $accountNumber = verifyUsername($user.'First Name'[0] + $user.'Last Name')
+    $username = ($user.'First Name'[0] + $user.'Last Name' + $accountNumber)
+
+    New-ADUser ` 
+        -Name ($user.'First Name' + " " + $user.'Last Name' + " " + $accountNumber) `
+        -GivenName $user.'First Name' `
+        -Surname $user.'Last Name'
+        -UserParincipalName $username ` 
+        -AccountPassword (ConvertTo-SecureString "P@$$wOrd123" -AsPlainText -Force) `
+        -Description $user.Description `
+        -EmailAddress $user."Email Address"
+        -Path "OU=Domain Users,OU=instructorpaul,DC=instructorpaul,DC=com" `
+        -Title $user.'Job Title'
+        -OfficePhone $user.'Office Phone'
+        -Path $user.'Organizational Unit'
+        -ChangePasswordAtLogon 1 `
+        -Enabled ([System.Convert]::ToBoolean(user.Enabled))    
+}
+
+# See if a username is already in use. If it is, 
+# then return the number that should be append the end of the name.
+# Else, return an empty string (example: phill, phill1, phill2, etc...).
+function verifyUsername($username) {
+    $i = 1
+
+    # See if username is taken (or in use)
+    if (userNameTaken($username) -eq $True) {
+        while(userNameTaken($username + $i) -eq $True) {
+            $i++
+        }
+    } else {
+        return ""
+    }   
+}
+
+# Check to see if username already exist
+function userNameTaken($username) {
+    $test1 = Get-ADUser -Filter { userPrincipalName -eq $username }
+    $test2 = Get-ADUser -Filter { samAccountName -eq $username }
+
+    if($test1 -eq $Null -and $test2 -eq $Null) {
+        return $False
+    } else {
+        return $True
+    }
+}
+```
 
 ## 43. Creating an Active Directory System State Backup
 
