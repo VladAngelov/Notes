@@ -31,7 +31,7 @@ When tokens are signed using public/private key pairs, the signature also certif
 * Consist of three parts separated by dots (.):
     * Header
     * Payload
-    * Signature
+    * Signature (only for the server)
 
 * A JWT typically looks like the following : 
     * *xxxxx.yyyyy.zzzzz*
