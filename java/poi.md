@@ -62,6 +62,7 @@ Work is progressing for Word documents *(WP=HWPF+XWPF)* and PowerPoint presentat
     * Read Excel Formula
     * Excel Write Formula
         * *https://www.journaldev.com/2562/apache-poi-tutorial*
+        * *https://mkyong.com/java/apache-poi-reading-and-writing-excel-file-in-java/*
 
 * Busy Developers' Guide to HSSF and XSSF Features:
     * *http://poi.apache.org/components/spreadsheet/quick-guide.html*
