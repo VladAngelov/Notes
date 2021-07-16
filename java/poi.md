@@ -76,7 +76,7 @@ Steps for easy understand:
 2. Use workbook *getNumberOfSheets()* to get the number of sheets and then use for loop to parse each of the sheets
     1. Get the **Sheet** instance using *getSheetAt(int i)* method
 3. Get **Row** iterator and then **Cell** iterator to get the Cell object ( *Apache POI is using iterator pattern (https://www.journaldev.com/1716/iterator-design-pattern-java)* )
-    4. Use switch-case to read the type of Cell and the process it accordingly
+4. Use switch-case to read the type of Cell and the process it accordingly
 
 ## Write Excel File
 Writing excel file in apache POI is similar to reading, **except that here we first create the workbook**. 
