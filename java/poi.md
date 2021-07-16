@@ -69,13 +69,13 @@ Work is progressing for Word documents *(WP=HWPF+XWPF)* and PowerPoint presentat
 
 
 ## Read Excel File
-* Steps for easy understand:
-    1. Create **Workbook** *instance based on the file type*
-        1. **XSSFWorkbook** for *xlsx* format
-        2. **HSSFWorkbook** for *xls*  format   
-    2. Use workbook *getNumberOfSheets()* to get the number of sheets and then use for loop to parse each of the sheets
-        1. Get the **Sheet** instance using *getSheetAt(int i)* method
-    3. Get **Row** iterator and then **Cell** iterator to get the Cell object ( *Apache POI is using iterator pattern (https://www.journaldev.com/1716/iterator-design-pattern-java)* )
+Steps for easy understand:
+1. Create **Workbook** *instance based on the file type*
+    1. **XSSFWorkbook** for *xlsx* format
+    2. **HSSFWorkbook** for *xls*  format   
+2. Use workbook *getNumberOfSheets()* to get the number of sheets and then use for loop to parse each of the sheets
+    1. Get the **Sheet** instance using *getSheetAt(int i)* method
+3. Get **Row** iterator and then **Cell** iterator to get the Cell object ( *Apache POI is using iterator pattern (https://www.journaldev.com/1716/iterator-design-pattern-java)* )
     4. Use switch-case to read the type of Cell and the process it accordingly
 
 ## Write Excel File
