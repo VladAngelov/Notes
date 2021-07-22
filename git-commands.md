@@ -66,4 +66,4 @@ Search the working directory for foo(): |  | git grep "foo()"
 --- | SSH Verify | ---
 Remove ssh certificate: |  | git config --global http.sslVerify false
 
-*There is no SPACE in < filename> / < commitID> / < branchname> / < sourcebranch> / < targetbranch> !*
+*There are no SPACEs in < filename> / < commit ID> / < branch name> / < sourcebranch> / < targetbranch> !*
