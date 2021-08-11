@@ -20,6 +20,7 @@ Add all files: |  | git add .
 --- | COMMIT | ---
 Commit changes to head (but not yet to the remote repository): |  | git commit -m "Commit message"
 Commit any files you've added with git add, and also commit any files you've changed since then: |  | git commit -a
+Reset (hard) to commit | | git reset --hard commit-N
 Add all files: |  | git add .
   |   |  
 --- | PUSH | ---
