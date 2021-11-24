@@ -23,6 +23,14 @@ Commit any files you've added with git add, and also commit any files you've cha
 Reset (hard) to commit | | git reset --hard commit-N
 Add all files: |  | git add .
   |   |  
+--- | STASH FILES | ---
+Stash: |  | git stash < filename >
+Save Stash: |  | git stash save 'some_name'
+Get file/s from the stash: |  | git stash pop
+Show file/s in the stash: |  | git stash show
+Show all stashes in the stash with indexes: |  | git stash pop
+Get file/s from the selected stash: |  | git stash pop
+  |   |   
 --- | PUSH | ---
 Send changes to the master branch of your remote repository: |  | git push origin master
   |   |  
