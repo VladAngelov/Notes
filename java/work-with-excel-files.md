@@ -3,7 +3,7 @@
 
 ```java
 
-package bg.bulsi.fmfib.camunda.service;
+package FOLDER_OF_SERVICES.service;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
