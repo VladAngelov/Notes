@@ -1,7 +1,5 @@
 # Keycloak 
 
----
-
 ## Password Policies
 
 Each new ***realm*** created has no password policies associated with it. 
