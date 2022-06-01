@@ -10,7 +10,7 @@ Keycloak has a rich set of password policies you can enable through the **Admin 
   1. Side menu 
   2. Authentication
   3. Password Policy 
-  4. Add policy... *(dropdown menu)* 
+  4. Add policy... *(drop-down menu)* 
   5. Save
 
 | Policy type | Policy value | Example |   
@@ -31,7 +31,7 @@ Keycloak has a rich set of password policies you can enable through the **Admin 
 | Maximum Length | Number of the maximum length of the password | 64 |
 
 * Password Policy Types:
-    * HashAlgorithm:
+    * Hash Algorithm:
         * Passwords are not stored as clear text.
         * Instead, they are hashed using standard hashing algorithms before they are stored or validated. 
         * The only built-in and default algorithm available is PBKDF2.
@@ -84,4 +84,4 @@ Keycloak has a rich set of password policies you can enable through the **Admin 
 | Max Wait | Max time a user will be locked out | 15 sec / **Minutes** / hours / days |
 | Failure Reset Time | When will failure count be reset? | 12 sec / min / **Hours** / days |
 
-> ***Bolded** - Second, Minutes, Hours or Days is the default type of time.* 
+> ***Bold** - Second, Minutes, Hours or Days is the default type of time.* 
