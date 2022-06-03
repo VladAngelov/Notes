@@ -1,4 +1,4 @@
-# Keycloak 
+# Keycloack 
 
 ## Password Policies
 
@@ -63,6 +63,7 @@ Keycloak has a rich set of password policies you can enable through the **Admin 
         * When a user changes their password they cannot use any stored passwords.
 
 ---
+---
 
 ## Brute Force Detection
 > *By default is disabled.*
@@ -85,3 +86,114 @@ Keycloak has a rich set of password policies you can enable through the **Admin 
 | Failure Reset Time | When will failure count be reset? | 12 sec / min / **Hours** / days |
 
 > ***Bold** - Second, Minutes, Hours or Days is the default type of time.* 
+
+---
+---
+
+## Users and Realm roles
+
+### Get users by group id
+
+*GET /{realm}/groups/{id}/members*
+
+---
+---
+
+### Get users by realm
+
+*GET /{realm}/users*
+
+---
+---
+
+### Returns a stream of users that have the specified role name
+
+*GET /{realm}/clients/{id}/roles/{role-name}/users*
+
+**Parameters**
+
+| Type | Name | Description | Schema |
+| ------- | ---- | ----------- | ------ |
+| Path | realm *required* | realm name (not id!) | string |
+| Path | id *required* | id of client (**not client-id**) | string |
+| Path | role-name *required* | the role name | string |
+
+---
+---
+
+### Returns a stream of users that have the specified role name
+
+*GET /{realm}/roles/{role-name}/users*
+
+**Parameters**
+
+| Type | Name | Description | Schema |
+| ---- | ---- | ----------- | ------ |
+| Path | realm *required* | realm name (**not id**) | string
+| Path | role-name *required* | the role name | string | 
+| Query | first *optional* | first result to return *ignored if negative or {@code null}* | integer(int32) |
+| Query | max *optional* | maximum number of results to return *ignored if negative or {@code null}* | integer(int32)
+
+**Response**
+
+| HTTP (Code) | Description | Schema |
+| ----------- | ----------- | ------ |
+| default | success | Stream |
+
+---
+---
+
+### Add client role to user
+
+> *POST /auth/admin/realms/{realm}/users/{user}/role-mappings/clients/{client}*
+> ```json
+> [
+>     {
+>         "id": "0830ff39-43ea-48bb-af8f-696bc420c1ce",
+>       "name": "create-client"
+>   }
+> ]
+> ```
+
+**Parameters**
+
+| Type | Name | Description | Schema |
+| ---- | ---- | ----------- | ------ |
+| Path | realm *required* | realm name (**not id**) | string |
+| Path | user *required* | user id | string |
+| Query | first *optional* | first result to return *ignored if negative or {@code null}* | integer(int32) |
+| Query | max *optional* | maximum number of results to return *ignored if negative or {@code null}* | integer(int32)
+
+---
+---
+
+### Role Mapper
+
+#### Get all groups
+*GET /{realm}/groups*
+
+**Response**
+
+| HTTP (Code) | Description | Schema |
+| ----------- | ----------- | ------ |
+| default | success | [Response](https://www.keycloak.org/docs-api/12.0/rest-api/index.html#_response) |
+
+---
+
+#### Add realm-level role mappings to the user
+
+*POST /{realm}/users/{id}/role-mappings/realm*
+
+**Parameters**
+
+| Type | Name | Description | Schema |
+| ---- | ---- | ----------- | ------ |
+| Path | id *required* | user id | string |
+| Path | realm *required* | realm name (**not id**) | string
+| Body | roles *required* | Roles to add (**not id**) | < [RoleRepresentation](https://www.keycloak.org/docs-api/12.0/rest-api/index.html#_rolerepresentation) >
+
+**Response**
+
+| HTTP (Code) | Description | Schema |
+| ----------- | ----------- | ------ |
+| default | success | No Content |
