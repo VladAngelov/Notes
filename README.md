@@ -20,4 +20,5 @@
   * [JWT](https://github.com/VladAngelov/Notes/blob/main/jwt.md)
   * [GIT commands](https://github.com/VladAngelov/Notes/blob/main/git-commands.md)
   * [Keycloak](https://github.com/VladAngelov/Notes/blob/main/keycloak.md)
+  * [Snippets](https://github.com/VladAngelov/Notes/blob/main/snippets.md)
  
