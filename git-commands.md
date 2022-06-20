@@ -33,7 +33,7 @@ Get file/s from the selected stash: |  | git stash pop
   |   |   
 --- | PUSH | ---
 Send changes to the master branch of your remote repository: |  | git push origin master
-Send changed to brach *(better practice is the remote repository(BRANCH_NAME) to be with the same name as the local branch)*  | | git push --set-upstream origin BRANCH_NAME
+Send changed to brach *(better practice is the remote repository(BRANCH_NAME) to be with the same name as the local branch)*  | | git push --set-upstream origin < branchname >
   |   |  
 --- | STATUS | ---
 List the files you've changed and those you still need to add or commit: |  | git status	
@@ -43,7 +43,7 @@ Add the server to be able to push to it: |  | git remote add origin < server>
 List all currently configured remote repositories: |  | git remote -v 
   |   |  
 --- | BRANCHES | ---
-Create a new branch and switch to it: |  | git checkout -b development origin/master
+Create a new branch and switch to it: |  | git checkout -b < branchname > origin/master
 Switch from one branch to another: |  | git checkout < branchname>
 List all the branches in your repo, and also tell you what branch you're currently in: |  | git branch
 Delete the feature branch: |  | git branch -d < branchname>
