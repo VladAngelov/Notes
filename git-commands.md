@@ -33,6 +33,7 @@ Get file/s from the selected stash: |  | git stash pop
   |   |   
 --- | PUSH | ---
 Send changes to the master branch of your remote repository: |  | git push origin master
+Send changed to brach *(better practice is the remote repository(BRANCH_NAME) to be with the same name as the local branch)*  | | git push --set-upstream origin BRANCH_NAME
   |   |  
 --- | STATUS | ---
 List the files you've changed and those you still need to add or commit: |  | git status	
