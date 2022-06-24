@@ -75,5 +75,8 @@ Search the working directory for foo(): |  | git grep "foo()"
   |   |  
 --- | SSH Verify | ---
 Remove ssh certificate: |  | git config --global http.sslVerify false
+--- | CONFIG | ---
+Password store | | git config credential.helper store
+
 
 *There are no SPACEs in < filename> / < commit ID> / < branch name> / < sourcebranch> / < targetbranch> !*
