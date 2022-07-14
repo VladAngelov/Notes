@@ -21,4 +21,6 @@
   * [GIT commands](https://github.com/VladAngelov/Notes/blob/main/git-commands.md)
   * [Keycloak](https://github.com/VladAngelov/Notes/blob/main/keycloak.md)
   * [Snippets](https://github.com/VladAngelov/Notes/blob/main/snippets.md)
+  * OAuth 2.0
+   * [OAuth 2.0] (https://github.com/VladAngelov/Notes/blob/main/oauth-2/oauth-course-notes.md)
  
