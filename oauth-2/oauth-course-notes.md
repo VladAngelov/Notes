@@ -145,13 +145,41 @@ The **ID Token** contains user identity information and the client application c
 **Refresh Token** - used to exchange a *refresh token* for an *access token*.
 
 
-## PKCE-enhanced Authorization Code
+### Authorization Code Grant
+
+Example:
+*Website visitor decide to connect with his Google / Facebook account and fetch some data. 
+So he clicks on the 'Connect with account' button and the website redirect the user to the Authorization server url.* 
+
+| KEY | VALUE | COMMENT |
+| --- | ----- | ------- |
+| response_type | code | Required - "code" |
+| state | some_text_for_state | Recommended |
+| redirect_uri | user_password | Optional |
+| scope | {Scopes} | Optional. Type of information to access. |
+| client_id | {client_id} | Required | 
+
+
+### PKCE-enhanced Authorization Code
 
 ***P**roof **K**ey for **C**ode **E**xchange*
 
 * Most used by Native and JS applications.
 * Uses *code_challenge*, *code_challenge_method* (S256 or plain) and *code_verifier*.
  
+Request parameters:
+
+| KEY | VALUE | COMMENT |
+| --- | ----- | ------- |
+| response_type | code | Required - "code" |
+| state | some_text_for_state | Recommended |
+| redirect_uri | user_password | Optional |
+| scope | {Scopes} | Optional. Type of information to access. |
+| client_id | {client_id} | Required | 
+| code_challenge | {code_challenge} | Base64 value - *code_verifier* |
+| code_challenge_method | {code_challenge_method} | ex.: *S256* or *plain* |
+| code_verifier | {code_verifier} | For Exchange OAuth Code - without *code_challenge* and *code_challenge_method* |
+
 
 ### Generating Code Verifier
 
@@ -181,6 +209,165 @@ The value is used in the request to exchange the authorization code for an acces
   }
 ```
 
-### Generating Code Challenge
 
+### Generating Code Challenge *value*
+Example in Java:
+*Generate random bytes, convert them to String and then Base64 encoder.
+The value is used in the request to exchange the authorization code for an access token.*
+
+```java
+  import java.io.UnsupportedEncodingException;
+  import java.security.MessageDigest;
+  import java.security.NoSuchAlgorithmException;
+  import java.security.SecureRandom;
+  import java.util.Base64;
+  
+  public class PkceUtil {
+      // ...
+      
+      // codeVerifier from generateCodeVerifier()
+      String generateCodeChallenge(String codeVerifier) throws UnsupportedEncodingException {          
+          byte[] bytes = codeVerifier.getBytes("US-ASCII");
+          
+          MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+          messageDigest.update(bytes, 0, bytes.length);
+          
+          byte[] digest = messageDigest.digest();
+          
+          return Base64.getUrlEncoder().withoutPadding().encodeToString(digest);
+      }
+  }
+```
+
+### Client Credentials
+*Machine to Machine Request*
+
+Mostly the *Client Application* running on the server side, example:
+*Spring Boot Microservices Application that needs to request data from another Spring Boot Microservice.
+If there is no access token, it will send request for to the Authorization Server to request the access token. 
+This time it will request directly to the token endpoint with **grant_type=client_credentials** and the client credentials (client_id & client_secret).
+After the response with the access token, the application can request data from the Resource Server.* 
+
+| KEY | VALUE | 
+| --- | ----- | 
+| grant_type | client_credentials |
+| scope | {Scopes} |
+| client_id | client_id_for_the_provider |
+| client_secret | client_secret_from_the_provider |
+
+
+### Password Grant
+***Only if the application does not support redirect!***
+
+*Resource Owner* have to provide Username and Password to the *Client* to acquire *Access Token* form *Authorization Server*.
+
+In the post:
+
+| KEY | VALUE |
+| --- | ----- | 
+| grant_type | password |
+| username | user_name |
+| password | user_password |
+| client_id | client_id_for_the_provider |
+| client_secret | client_secret_from_the_provider | 
+| scope | profile |
+
+ 
+## Refresh Token
+
+Example: 
+
+* First authentication:
+
+|   |     |     |     |
+|---| --- | --- | --- |
+| Client Application | Request an Access Token | ---> | Authorization Server |
+| Client Application | <--- | Access Token & Refresh Token | Authorization Server |
+| Client Application | Request protected resource | ---> | Resource Server |
+| Client Application | <--- | Protected Resource | Resource Server |
+
+* When the token is expired:
+
+|   |   |     |     |
+|---| --- | --- | --- |
+| Client Application | Request protected resource | ---> | Resource Server |
+| Client Application | <--- | Invalid Token | Resource Server |
+
+* User Refresh Token: 
+
+|   |   |     |     |
+| --- | --- | --- | --- |
+| Client Application | Refresh Access Token | ---> | Authorization Server |
+| Client Application | <--- | New Access Token & Refresh Token (optionally) | Authorization Server |
+
+### Refresh Token that never expires 
+*Request example with Password grant type*
+
+Params:
+
+| KEY | VALUE |
+| --- | ----- | 
+| grant_type | password |
+| username | user_name |
+| password | user_password |
+| client_id | client_id_for_the_provider |
+| client_secret | client_secret_from_the_provider | 
+| scope | profile offline_access |
+
+Response:
+* access_token: ...
+* expires_in: ...
+* **refresh_expires_in: 0** (*seconds*)
+* refresh_token: ...
+* token type: ...
+
+### Refresh the Refresh Token
+
+| KEY | VALUE |
+| --- | ----- | 
+| grant_type | refresh_token |
+| client_id | client_id_for_the_provider |
+| client_secret | client_secret_from_the_provider | 
+| refresh_token | refresh_token_from_previous_request |
+
+
+---
+
+## Keycloak
+
+* Keycloak is an open source Identity and Access Management solution.
+* Supports Single-Sign On (SSO).
+* Social Login.
+* User Federation
+
+
+### Realms
+
+* Master - the top realm, can add, edit or delete other realms.
+* Realm - configure user's rights policy, limits, roles and groups.
+* Create new Clients
+
+### Create a new OAuth client application
+
+* Client ID - name of the client
+* Client Protocol - openid-connect / saml
+* Root URl - optional
+* Settings:
+  * only 1 required field - *Valid Redirect URIs* (after success log in)
+
+### Generate secret key
+
+1. Set the *Access Type* to **confidential** (default - public) in the *Settings* tab in the "*Clients*".
+2. Get already generated secret or "*Regenerate Secret*"
+
+
+### Enable / Disable OAuth 2.0 Authorization Flow
+
+1. Administration console --> Clients --> Settings --> Standard Flow Enabled --> OFF
+2. Administration console --> Clients --> Settings --> Advanced Settings --> Proof Key for Code Exchange Code Challenge Method --> S265 / plain / empty
+3. Administration console --> Clients --> Settings --> Save
+
+### OAuth 2.0 Client Scopes
+
+Administration console --> Client Scopes --> Edit (for already existing scope) --> Client Scopes (tab) --> select necessary scopes 
 
