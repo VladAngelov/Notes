@@ -371,3 +371,183 @@ Response:
 
 Administration console --> Client Scopes --> Edit (for already existing scope) --> Client Scopes (tab) --> select necessary scopes 
 
+---
+
+## Resource Server
+
+* Create project with dependencies:
+  * Spring Web
+  * Spring Boot DevTools
+  * OAuth2 Resource Server
+* Start as a normal Maven project.
+* Settings(yaml) file:
+  * Port
+  * Access Token uri for correct authentication 
+
+
+### Use the token
+
+Example for using JWT with controller:
+
+```java
+import java.util.Collections;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/token")
+public class TokenController {
+    
+    public String getToken(@AuthenticationPrincipal Jwt jwt) {
+        
+        // Through - jwt. we can access all jwt properties / data
+        
+        return jwt.getTokenValue();
+        
+        // or
+        
+        return Collections.singleton("principal", jwt); // Map<String, Object>
+    }
+}
+```
+
+## Scope-Base Access Control
+* Definition:
+  * Scope is a mechanism in OAuth 2.0 to limit an application access ti a user's account. An application can request one or more scopes, 
+  this information is then presented to the user in the consent screen, 
+  and the token issued to the application will be limited to the scopes granted.
+
+### WebSecurityConfigurerAdapter and enable Web Security
+
+> WebSecurityConfigurerAdapter **is deprecated**!
+> 
+> Replaced by **SecurityFilterChain**
+
+Example:
+
+```java
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@EnableWebSecurity
+public class WebSecurity extends SecurityFilterChain {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(
+                    authz -> authz.anyRequest().authenticated())
+            .httpBasic(Customizer.withDefaults());
+     
+        return http.build();
+    }
+}
+```
+
+---
+
+## Spring Security
+
+### Roles
+
+| User | Admin | Super Admin |
+| ---- | ----- | ----------- |
+| View profile | View profile | View profile |
+| View other users | View other users | View other users |    
+| Edit own profile | Edit own profile | Edit own profile |    
+|                  | Delete other users | Delete other users |
+|                  |                    | Edit/Delete other Admins |    
+
+
+### Authority
+
+Authority name = Role Name = ROLE_ADMIN
+
+|     |     |     |  
+| --- | --- | --- |
+| hasRole("ADMIN") | \  |
+|  |  | Collection< GrantedAuthority> |
+| hasAuthority("ROLE_ADMIN") | / | |
+
+
+### Role converting
+
+If we want to convert some role, we have to use *org.springframework.core.convert.converter.Converter*
+
+
+For example in this case is used Keycloak:
+
+1. Add converter class, which implements *Converter*:
+
+```java
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
+
+    @Override
+    public Collection<GrantedAuthority> convert(Jwt jwt) {
+        Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().get("realm_access");
+
+        if (realmAccess == null || realmAccess.isEmpty()) {
+            return new ArrayList<>();
+        }
+        Collection<GrantedAuthority> returnValue = ((List<String>) realmAccess.get("roles"))
+                .stream().map(roleName -> "ROLE_" + roleName)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        return returnValue;
+    }
+}
+```
+
+2. Add fields in config file:
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.web.SecurityFilterChain;
+
+import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+@EnableWebSecurity
+public class WebSecurity implements SecurityFilterChain {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+
+        http
+            .authorizeHttpRequests(
+                    auth -> auth.anyRequest().authenticated())
+            .httpBasic(Customizer.withDefaults())
+            .oauth2ResourceServer()
+            .jwt()
+            .jwtAuthenticationConverter(jwtAuthenticationConverter);
+
+        return http.build();
+    }
+}
+```
+
+--- 
+
+## Method-Level Security
