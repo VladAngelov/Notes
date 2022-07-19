@@ -551,3 +551,75 @@ public class WebSecurity implements SecurityFilterChain {
 --- 
 
 ## Method-Level Security
+
+We can use annotations to denied or allow execution of method based on conditions.
+
+* Some examples:
+  * user's role 
+  * user's authority
+  * @PreAuthorize:
+   ```java
+    public class UserController { 
+        @PreAuthorize("hasAuthority('DELETE_AUTHORITY') or #id == principal.userId")
+        @DeleteMapping(path = '/{id}')
+        public ResponseEntity deleteUser(@PathVariable String id) {
+            // some code here
+        }   
+    }
+    ```
+  * @PostAuthorize - first execute the method, then check if the return object is allowed for this user:
+  ```java
+  public class UserController { 
+     @PostAuthorize("hasRole('ADMIN') or returnObject.userId == principal.userId")
+     @GetMapping(path = '/{id}')
+     public UserRest getUser(@PathVariable String id) {
+        UserRest returnValue = new UserRest();
+  
+         // some code here
+  
+        return returnValue;
+     } 
+  }
+    ```
+
+The annotations can be used on class level.
+
+The annotations of method **have higher priority** then the annotations of the class.  
+
+Example:
+```java
+@RestController
+@Secured("ROLE_ADMIN")
+public class UserController { 
+     @PreAuthorize("permitAll")
+     @GetMapping(path = "/user/status/check")
+     public String userStatusCheck() {
+       
+        return "Working for users";
+     } 
+     
+     @GetMapping(path = "/managers/status/check")
+     public String managersStatusCheck() {
+       
+        return "Working for managers";
+     } 
+ }
+```
+
+To enable we have to add **@EnableGlobalMethodSecurity** / (*@EnableGlobalMethodSecurity(securedEnabled=true)*)
+from *org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity*.
+
+
+```java
+public class UserController {
+    @PostAuthorize("returnObject.userId == #jwt.subject")
+    @GetMapping(path = "/{id}")
+    public UserRest getUser(@PathVariable String id, @AuthenticationPrincipal Jwt jwt) {
+        return new UserRest("user_firs_name", "user_last_name", "user_id");
+    }
+}
+```
+
+---
+
+## Resource Server Behind the API Gateway
