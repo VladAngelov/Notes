@@ -8,48 +8,48 @@
 * OAuth 2.0 - is an Authorization Framework.
 * Good for web and mobile devices.
 * OAuth - is a delegated authorization framework allows:
-  * Grand access user data which is stored on another device;
-  * Data access restriction;
-  * Grand permission to a third party software, website or device access.
-  * More secure than old ways (third party software saves username and password)
+    * Grand access user data which is stored on another device;
+    * Data access restriction;
+    * Grand permission to a third party software, website or device access.
+    * More secure than old ways (third party software saves username and password)
 
 
 ## OAuth 2 Roles
 *Different actors in OAuth 2.0*
 
 * Roles:
-  1. Resource Owner:
-     * a user who owns the information;
-     * he is capable to grand the access to this information;
-  2. Client:
-     * an application that access the information (*Web application, mobile application or Postman*);
-  3. Resource Server
-     * Server user to store the information (*own server, Cloud server*);
-     * In case with microservices each of them will be considered on separate resource server;
-  4. Authorization server
-     * Issues the access tokens to client application after successfully authentication of the user;
-     * Microsoft, Google, Twitter, Facebook have own authorization servers;
-     * We can start own authorization server:
-       * Spring Authorization server
-       * Keycloak Authorization server (*on Docker*)
-     * Standalone authorization servers:
-       * AWS Cognito
-       * Microsoft Identity Platform
-       * Okta
+    1. Resource Owner:
+        * a user who owns the information;
+        * he is capable to grand the access to this information;
+    2. Client:
+        * an application that access the information (*Web application, mobile application or Postman*);
+    3. Resource Server
+        * Server user to store the information (*own server, Cloud server*);
+        * In case with microservices each of them will be considered on separate resource server;
+    4. Authorization server
+        * Issues the access tokens to client application after successfully authentication of the user;
+        * Microsoft, Google, Twitter, Facebook have own authorization servers;
+        * We can start own authorization server:
+            * Spring Authorization server
+            * Keycloak Authorization server (*on Docker*)
+        * Standalone authorization servers:
+            * AWS Cognito
+            * Microsoft Identity Platform
+            * Okta
 
 
 ## State of OAuth 2.0 in Spring Security 5
 
 * Spring Security OAuth Project (*Deprecated*):
-  * Client Support
-  * Resource Server
-  * Authorization Server
+    * Client Support
+    * Resource Server
+    * Authorization Server
 
 * The New OAuth Stack in Spring Security 5:
-  * Client Support
-  * Resource Service 
-  * Authorization Server (*same specifications as Keycloak*)
-    * *Spring Authorization Server is a framework that provides implementations of the OAuth 2.1 and OpenID Connect 1.0 specifications and other related specifications. It is built on top of Spring Security to provide a secure, light-weight, and customizable foundation for building OpenID Connect 1.0 Identity Providers and OAuth2 Authorization Server products.*
+    * Client Support
+    * Resource Service
+    * Authorization Server (*same specifications as Keycloak*)
+        * *Spring Authorization Server is a framework that provides implementations of the OAuth 2.1 and OpenID Connect 1.0 specifications and other related specifications. It is built on top of Spring Security to provide a secure, light-weight, and customizable foundation for building OpenID Connect 1.0 Identity Providers and OAuth2 Authorization Server products.*
 
 
 ## OAuth 2.0 Client Types
@@ -64,43 +64,43 @@
 
 All are capable to send HTTP requests to the Authorization Server.
 For client application to be able to communicate with the Authorization Server, need to:
-* be registered with it 
-* get **client id** 
-* get **client secret key** 
+* be registered with it
+* get **client id**
+* get **client secret key**
 
-> **Client id** and **secret key** are used by Authentication server and client application to communicate with each other.   
+> **Client id** and **secret key** are used by Authentication server and client application to communicate with each other.
 
 
 ## OAuth Access Token
 
 When the client app has the **Access Token**, it can access the resource server without asking for username and password every time.
 
-The **Access Token** is secured as sensitive information and if is necessary to store it, the client application must store it a secure location. 
+The **Access Token** is secured as sensitive information and if is necessary to store it, the client application must store it a secure location.
 
 * **Access Token Types**:
-  * Identifier type:
-    * short text determined by auth server;
-    * doesn't contain any authorization information;
-    * used to look at the authentication database on Authentication server:
-      * Example:
-        * *access_token*
-        * *user_id*
-        * *scope*
-        * *expires*
-  * Self-contain the authorization information:
-    * contains much more information;
-    * JSON object;
-    * base64 encoded;
-    * must not contain sensitive information;
-    * separated in 3 parts (*by ' . '*):
-      1. Header section: 
-         1. how to validate the token
-         2. type of the token
-         3. how it was sign 
-      2. Payload section:
-         1. information or claims (custom claims)
-      3. Signature:
-         1. used to validate the access token
+    * Identifier type:
+        * short text determined by auth server;
+        * doesn't contain any authorization information;
+        * used to look at the authentication database on Authentication server:
+            * Example:
+                * *access_token*
+                * *user_id*
+                * *scope*
+                * *expires*
+    * Self-contain the authorization information:
+        * contains much more information;
+        * JSON object;
+        * base64 encoded;
+        * must not contain sensitive information;
+        * separated in 3 parts (*by ' . '*):
+            1. Header section:
+                1. how to validate the token
+                2. type of the token
+                3. how it was sign
+            2. Payload section:
+                1. information or claims (custom claims)
+            3. Signature:
+                1. used to validate the access token
 
 
 ## OpenID Connect
@@ -111,9 +111,9 @@ Additional layer on top of OAuth 2.0.
 
 It is an identity layer that can provide the client application with the identity information about the user.
 
-The Authorization server that supports **OpenID Connect** and provide client application with the identity information is also called **Identity Provider**.   
+The Authorization server that supports **OpenID Connect** and provide client application with the identity information is also called **Identity Provider**.
 
-With the OpenID Connect, the Authorization server additionally with the *Access Token* provides and **ID Token**.   
+With the OpenID Connect, the Authorization server additionally with the *Access Token* provides and **ID Token**.
 
 ### ID Token
 
@@ -126,15 +126,15 @@ The **ID Token** contains user identity information and the client application c
 ## OAuth 2.0 Grant Types
 
 > **Grand Type** is a way an application gets an access token.
- 
-* Selected by the case at the moment:
-  * Server Side Web Application (**Authorization Code**)
-  * Server Side Script with no UI (**Client credentials**)
-  * Javascript Single Page Application (**PKCE Enhanced Authorization code**)
-  * Mobile Native Application (**Authorization Code** or **PKCE Enhanced Authorization code**)
-  * Devices (**Device code**)
 
-**PKCE Enhanced Authorization code** - case when the application can not save the credentials confidential. 
+* Selected by the case at the moment:
+    * Server Side Web Application (**Authorization Code**)
+    * Server Side Script with no UI (**Client credentials**)
+    * Javascript Single Page Application (**PKCE Enhanced Authorization code**)
+    * Mobile Native Application (**Authorization Code** or **PKCE Enhanced Authorization code**)
+    * Devices (**Device code**)
+
+**PKCE Enhanced Authorization code** - case when the application can not save the credentials confidential.
 
 **Device code** - case when the device can not open the browser or execute the code on the server side.
 
@@ -148,8 +148,8 @@ The **ID Token** contains user identity information and the client application c
 ### Authorization Code Grant
 
 Example:
-*Website visitor decide to connect with his Google / Facebook account and fetch some data. 
-So he clicks on the 'Connect with account' button and the website redirect the user to the Authorization server url.* 
+*Website visitor decide to connect with his Google / Facebook account and fetch some data.
+So he clicks on the 'Connect with account' button and the website redirect the user to the Authorization server url.*
 
 | KEY | VALUE | COMMENT |
 | --- | ----- | ------- |
@@ -166,7 +166,7 @@ So he clicks on the 'Connect with account' button and the website redirect the u
 
 * Most used by Native and JS applications.
 * Uses *code_challenge*, *code_challenge_method* (S256 or plain) and *code_verifier*.
- 
+
 Request parameters:
 
 | KEY | VALUE | COMMENT |
@@ -183,30 +183,30 @@ Request parameters:
 
 ### Generating Code Verifier
 
-Example in Java: 
-*Generate random bytes, convert them to String and then Base64 encoder. 
+Example in Java:
+*Generate random bytes, convert them to String and then Base64 encoder.
 The value is used in the request to exchange the authorization code for an access token.*
 
 ```java
   import java.io.UnsupportedEncodingException;
-  import java.security.MessageDigest;
-  import java.security.NoSuchAlgorithmException;
-  import java.security.SecureRandom;
-  import java.util.Base64;
-  
-  public class PkceUtil {
-      
-      String generateCodeVerifier() throws UnsupportedEncodingException {
-          
-          SecureRandom secureRandom = new SecureRandom();
-          
-          byte[] codeVerifier = new byte[32];
-          
-          secureRandom.nextBytes(codeVerifier);
-          
-          return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
-      }
-  }
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
+
+public class PkceUtil {
+
+    String generateCodeVerifier() throws UnsupportedEncodingException {
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        byte[] codeVerifier = new byte[32];
+
+        secureRandom.nextBytes(codeVerifier);
+
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
+    }
+}
 ```
 
 
@@ -217,26 +217,26 @@ The value is used in the request to exchange the authorization code for an acces
 
 ```java
   import java.io.UnsupportedEncodingException;
-  import java.security.MessageDigest;
-  import java.security.NoSuchAlgorithmException;
-  import java.security.SecureRandom;
-  import java.util.Base64;
-  
-  public class PkceUtil {
-      // ...
-      
-      // codeVerifier from generateCodeVerifier()
-      String generateCodeChallenge(String codeVerifier) throws UnsupportedEncodingException {          
-          byte[] bytes = codeVerifier.getBytes("US-ASCII");
-          
-          MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-          messageDigest.update(bytes, 0, bytes.length);
-          
-          byte[] digest = messageDigest.digest();
-          
-          return Base64.getUrlEncoder().withoutPadding().encodeToString(digest);
-      }
-  }
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
+
+public class PkceUtil {
+    // ...
+
+    // codeVerifier from generateCodeVerifier()
+    String generateCodeChallenge(String codeVerifier) throws UnsupportedEncodingException {
+        byte[] bytes = codeVerifier.getBytes("US-ASCII");
+
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(bytes, 0, bytes.length);
+
+        byte[] digest = messageDigest.digest();
+
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(digest);
+    }
+}
 ```
 
 ### Client Credentials
@@ -244,9 +244,9 @@ The value is used in the request to exchange the authorization code for an acces
 
 Mostly the *Client Application* running on the server side, example:
 *Spring Boot Microservices Application that needs to request data from another Spring Boot Microservice.
-If there is no access token, it will send request for to the Authorization Server to request the access token. 
+If there is no access token, it will send request for to the Authorization Server to request the access token.
 This time it will request directly to the token endpoint with **grant_type=client_credentials** and the client credentials (client_id & client_secret).
-After the response with the access token, the application can request data from the Resource Server.* 
+After the response with the access token, the application can request data from the Resource Server.*
 
 | KEY | VALUE | 
 | --- | ----- | 
@@ -272,10 +272,10 @@ In the post:
 | client_secret | client_secret_from_the_provider | 
 | scope | profile |
 
- 
+
 ## Refresh Token
 
-Example: 
+Example:
 
 * First authentication:
 
@@ -293,14 +293,14 @@ Example:
 | Client Application | Request protected resource | ---> | Resource Server |
 | Client Application | <--- | Invalid Token | Resource Server |
 
-* User Refresh Token: 
+* User Refresh Token:
 
 |   |   |     |     |
 | --- | --- | --- | --- |
 | Client Application | Refresh Access Token | ---> | Authorization Server |
 | Client Application | <--- | New Access Token & Refresh Token (optionally) | Authorization Server |
 
-### Refresh Token that never expires 
+### Refresh Token that never expires
 *Request example with Password grant type*
 
 Params:
@@ -353,7 +353,7 @@ Response:
 * Client Protocol - openid-connect / saml
 * Root URl - optional
 * Settings:
-  * only 1 required field - *Valid Redirect URIs* (after success log in)
+    * only 1 required field - *Valid Redirect URIs* (after success log in)
 
 ### Generate secret key
 
@@ -369,20 +369,20 @@ Response:
 
 ### OAuth 2.0 Client Scopes
 
-Administration console --> Client Scopes --> Edit (for already existing scope) --> Client Scopes (tab) --> select necessary scopes 
+Administration console --> Client Scopes --> Edit (for already existing scope) --> Client Scopes (tab) --> select necessary scopes
 
 ---
 
 ## Resource Server
 
 * Create project with dependencies:
-  * Spring Web
-  * Spring Boot DevTools
-  * OAuth2 Resource Server
+    * Spring Web
+    * Spring Boot DevTools
+    * OAuth2 Resource Server
 * Start as a normal Maven project.
 * Settings(yaml) file:
-  * Port
-  * Access Token uri for correct authentication 
+    * Port
+    * Access Token uri for correct authentication
 
 
 ### Use the token
@@ -415,14 +415,14 @@ public class TokenController {
 
 ## Scope-Base Access Control
 * Definition:
-  * Scope is a mechanism in OAuth 2.0 to limit an application access ti a user's account. An application can request one or more scopes, 
-  this information is then presented to the user in the consent screen, 
-  and the token issued to the application will be limited to the scopes granted.
+    * Scope is a mechanism in OAuth 2.0 to limit an application access ti a user's account. An application can request one or more scopes,
+      this information is then presented to the user in the consent screen,
+      and the token issued to the application will be limited to the scopes granted.
 
 ### WebSecurityConfigurerAdapter and enable Web Security
 
 > WebSecurityConfigurerAdapter **is deprecated**!
-> 
+>
 > Replaced by **SecurityFilterChain**
 
 Example:
@@ -555,9 +555,9 @@ public class WebSecurity implements SecurityFilterChain {
 We can use annotations to denied or allow execution of method based on conditions.
 
 * Some examples:
-  * user's role 
-  * user's authority
-  * @PreAuthorize:
+    * user's role
+    * user's authority
+    * @PreAuthorize:
    ```java
     public class UserController { 
         @PreAuthorize("hasAuthority('DELETE_AUTHORITY') or #id == principal.userId")
@@ -567,7 +567,7 @@ We can use annotations to denied or allow execution of method based on condition
         }   
     }
     ```
-  * @PostAuthorize - first execute the method, then check if the return object is allowed for this user:
+    * @PostAuthorize - first execute the method, then check if the return object is allowed for this user:
   ```java
   public class UserController { 
      @PostAuthorize("hasRole('ADMIN') or returnObject.userId == principal.userId")
@@ -584,7 +584,7 @@ We can use annotations to denied or allow execution of method based on condition
 
 The annotations can be used on class level.
 
-The annotations of method **have higher priority** then the annotations of the class.  
+The annotations of method **have higher priority** then the annotations of the class.
 
 Example:
 ```java
@@ -623,3 +623,36 @@ public class UserController {
 ---
 
 ## Resource Server Behind the API Gateway
+
+Old:
+
+    User -->
+        Client Application -->
+            Identity provider (with users db) --> 
+        Client Application (with Access token)  --> 
+                Resource Server (GET/resource - with Access token) 
+
+New:
+
+    User --> 
+        Client Application --> 
+            Identity provider (with users db) -->   
+        Client Application (with Access token)  --> 
+             API Gateway (GET/resource - with Access token) --> 
+                Microservices --> 
+                    ports
+
+1. **User** --*Request a resource*--> **Client Application**
+2. **Client Application** --*Request to Microservice A*--> **Spring Cloud API Gateway**
+3. **Spring Cloud API Gateway** --*Route to Microservice A*--> **Microservice A**
+4. **Microservice A** --*Validate Access Token*--> **Identity Provider**
+5. If *Access token* is invalid: 
+   * **Microservice A** --*401 Unauthorized*--> **Client Application**
+6. **User** --*User authentication*--> **Identity provider**
+7. **Identity provider** --*User authentication*--> **Client Application** 
+8. **Client Application** --*Request to Microservices A (+ Access token)*--> **Spring Cloud API Gateway**
+9. **Spring Cloud API Gateway** --*Route to Microservice A*--> **Microservice A**
+10. **Microservice A** --*Validate Access Token*--> **Identity Provider**
+11. **Microservice A** --*Validate Method Level Security Expressions*--> **Microservice B** ----> **Microservice A**
+12. **Microservice A** --*Response*--> **Client Application**
+13. **Client Application** --*Response*--> **User**
