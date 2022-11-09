@@ -28,8 +28,10 @@ Stash: |  | git stash < filename >
 Save Stash: |  | git stash save 'some_name'
 Get file/s from the stash: |  | git stash pop
 Show file/s in the stash: |  | git stash show
+ |  | git stash list
 Show all stashes in the stash with indexes: |  | git stash pop
 Get file/s from the selected stash: |  | git stash pop
+Delete the last stashed record: |  | git stash drop
   |   |   
 --- | PUSH | ---
 Send changes to the master branch of your remote repository: |  | git push origin master
