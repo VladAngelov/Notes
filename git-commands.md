@@ -67,5 +67,8 @@
 | Password store                                                                                                               |                                   | git config credential.helper store                                                                            |
 |                                                                                                                              | MERGE REQUEST                     |                                                                                                               |
 | Create merge request to target branch and assign to user:                                                                    |                                   | git push -o merge_request.create -o merge_request.target=< branch_name > -o merge_request.assign=< username > |
+|                                                                                                                              | EXTRA COMMANDS                    |                                                                                                               |
+| Remove limit of file name length                                                                                             |                                   | git config --system core.longpaths true                                                                       |
 
 *There are no SPACEs in < filename> / < commit ID> / < branch name> / < sourcebranch> / < targetbranch> !*
+
